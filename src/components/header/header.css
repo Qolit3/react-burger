@@ -1,0 +1,27 @@
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 88px;
+  min-width: calc(1920-340*2)px;
+  background-color: #1c1c21;
+  align-items: center;
+  padding: 0 340px;
+}
+
+.header__first-column {
+  display: flex;
+}
+
+.header__button-box {
+  display: flex;
+}
+
+.header__button-box:first-of-type {
+  justify-self: start;
+}
+
+
+.header__button-box:last-of-type {
+  justify-self: end;
+}
+
