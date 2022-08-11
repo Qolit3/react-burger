@@ -1,0 +1,33 @@
+.burger-constructor {
+  width: 568px;
+}
+
+.burger-constructor__list {
+  display: flex;
+  flex-direction: column;
+}
+
+.burger-constructor__ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  
+}
+
+.burger-constructor__ingredient:first-of-type,
+.burger-constructor__ingredient:last-of-type {
+  justify-content: end;
+}
+
+.burger-constructor__result {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.burger-constructor__currency {
+  display: flex;
+}
+
+.burger-constructor__currency-number {
+  margin-right: 9.5px;
+}
