@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import data from '../../util/data.json'
+import PropTypes from 'prop-types';
 import IngredientsBlock from '../ingredients-block/ingredients-block';
 import './burger-ingredients.css'
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({list}:any) => {
   const [current, setCurrent] = React.useState('0');
   const [buns, setBuns] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const [sauces, setSauces] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
@@ -14,20 +14,23 @@ const BurgerIngredients = () => {
   const ingredientsSauces = [sauces, mains, buns];
   const ingredientsMains = [mains, buns, sauces];
 
+
+
+  
   useEffect(() => {
     setBuns( {
       ingredientName: 'Булки',
-      ingredients: data.filter((item) => item.type === 'bun')
+      ingredients: list.filter((item: any) => item.type === 'bun')
     })
     setSauces( {
       ingredientName: 'Соусы',
-      ingredients: data.filter((item) => item.type === 'sauce')
+      ingredients: list.filter((item: any) => item.type === 'sauce')
     })
     setMains ({
       ingredientName: 'Начинки',
-      ingredients: data.filter((item) => item.type === 'main')
+      ingredients: list.filter((item: any) => item.type === 'main')
     })   
-  },[])
+  },[list])
 
   const renderIngerdientsBlocks = () => {
     if(current === '0') {
@@ -57,9 +60,30 @@ const BurgerIngredients = () => {
       <div>
         {renderIngerdientsBlocks()}
       </div>
+      
     </div>
   )
-
 }
+
+BurgerIngredients.propTypes = {
+  list:
+      PropTypes.arrayOf(
+        PropTypes.shape({
+          _id: PropTypes.string,
+          name: PropTypes.string,
+          type: PropTypes.string,
+          proteins: PropTypes.number,
+          fat: PropTypes.number,
+          carbohydrates: PropTypes.number,
+          calories: PropTypes.number,
+          price: PropTypes.number,
+          image: PropTypes.string,
+          image_mobile: PropTypes.string,
+          image_large: PropTypes.string,
+          __v: PropTypes.number
+  }))
+}
+
+
 
 export default BurgerIngredients;

@@ -1,0 +1,60 @@
+.modal{
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: #1C1C21;
+  border: 1px solid rgba(76, 76, 255, 0.2);
+  box-shadow: 0px 24px 32px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 1px rgba(0, 0, 0, 0.04);
+  border-radius: 40px;
+}
+
+.modal__close {
+  position: absolute;
+  top: 63px;
+  right: 43px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+  cursor: pointer;
+}
+
+.modal__text {
+  text-align: center;
+}
+
+.modal__done_3 {
+  background-image: url('../../images/order-done\ \(1\).png');
+  
+  width: 107px;
+  height: 100px;
+  
+}
+
+.modal__done_2 {
+  background-image: url('../../images/order-done\ \(2\).png');
+  
+  width: 98px;
+  height: 102px;
+  
+}
+.modal__done_1 {
+  background-image: url('../../images/order-done\ \(3\).png');
+  
+  width: 68px;
+  height: 65.33px;
+  
+}
+
+.modal__done {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  
+}
+
+.modal__row-box {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  justify-content: center;
+}
