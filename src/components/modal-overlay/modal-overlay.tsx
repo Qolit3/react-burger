@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import './modal-overlay.css';
+import PropTypes from 'prop-types';
 
 const reactModals: any = document.querySelector('#react-modals')
 
@@ -27,6 +28,12 @@ const ModalOverlay = ({ handleClose, ...props }:any) => {
       ),
       reactModals
   )
+}
+
+ModalOverlay.propTypes = {
+  handleClose: PropTypes.func,
+  active: PropTypes.bool,
+  children: PropTypes.element
 }
 
 export default ModalOverlay
