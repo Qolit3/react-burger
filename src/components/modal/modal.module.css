@@ -8,7 +8,7 @@
   border-radius: 40px;
 }
 
-.modal__close {
+.close {
   position: absolute;
   top: 63px;
   right: 43px;
@@ -17,42 +17,11 @@
   cursor: pointer;
 }
 
-.modal__text {
+.text {
   text-align: center;
 }
 
-.modal__done_3 {
-  background-image: url('../../images/order-done\ \(1\).png');
-  
-  width: 107px;
-  height: 100px;
-  
-}
-
-.modal__done_2 {
-  background-image: url('../../images/order-done\ \(2\).png');
-  
-  width: 98px;
-  height: 102px;
-  
-}
-.modal__done_1 {
-  background-image: url('../../images/order-done\ \(3\).png');
-  
-  width: 68px;
-  height: 65.33px;
-  
-}
-
-.modal__done {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto;
-  
-}
-
-.modal__row-box {
+.row {
   display: flex;
   flex-direction: row;
   column-gap: 20px;

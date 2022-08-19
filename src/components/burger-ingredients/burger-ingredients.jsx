@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import IngredientsBlock from '../ingredients-block/ingredients-block';
-import './burger-ingredients.css'
+import styles from './burger-ingredients.module.css'
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import ingredientType from '../../util/types';
 
-const BurgerIngredients = ({list}:any) => {
+const BurgerIngredients = ({list}) => {
   const [current, setCurrent] = React.useState('0');
   const [buns, setBuns] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const [sauces, setSauces] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
@@ -13,22 +14,19 @@ const BurgerIngredients = ({list}:any) => {
   const ingredientsBuns = [buns, sauces, mains];
   const ingredientsSauces = [sauces, mains, buns];
   const ingredientsMains = [mains, buns, sauces];
-
-
-
   
   useEffect(() => {
     setBuns( {
       ingredientName: 'Булки',
-      ingredients: list.filter((item: any) => item.type === 'bun')
+      ingredients: list.filter((item) => item.type === 'bun')
     })
     setSauces( {
       ingredientName: 'Соусы',
-      ingredients: list.filter((item: any) => item.type === 'sauce')
+      ingredients: list.filter((item) => item.type === 'sauce')
     })
     setMains ({
       ingredientName: 'Начинки',
-      ingredients: list.filter((item: any) => item.type === 'main')
+      ingredients: list.filter((item) => item.type === 'main')
     })   
   },[list])
 
@@ -44,9 +42,9 @@ const BurgerIngredients = ({list}:any) => {
   }
 
   return (
-    <div className='burger-ingredients'>
+    <div className={styles.ingredients}>
       <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
-      <div className='burger-ingredients__tabs mt-5'>
+      <div className={`${styles.tabs} mt-5`}>
         <Tab value="0" active={current === '0'} onClick={setCurrent}>
           Булки
         </Tab>
@@ -57,7 +55,7 @@ const BurgerIngredients = ({list}:any) => {
           Начинки
         </Tab>
       </div>
-      <div>
+      <div className={styles.scroll}>
         {renderIngerdientsBlocks()}
       </div>
       
@@ -66,22 +64,7 @@ const BurgerIngredients = ({list}:any) => {
 }
 
 BurgerIngredients.propTypes = {
-  list:
-      PropTypes.arrayOf(
-        PropTypes.shape({
-          _id: PropTypes.string,
-          name: PropTypes.string,
-          type: PropTypes.string,
-          proteins: PropTypes.number,
-          fat: PropTypes.number,
-          carbohydrates: PropTypes.number,
-          calories: PropTypes.number,
-          price: PropTypes.number,
-          image: PropTypes.string,
-          image_mobile: PropTypes.string,
-          image_large: PropTypes.string,
-          __v: PropTypes.number
-  }))
+  list: PropTypes.arrayOf(ingredientType)
 }
 
 

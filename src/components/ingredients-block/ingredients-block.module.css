@@ -1,6 +1,4 @@
-
-
-.ingredients-block__list {
+.list {
   display: flex;
   margin-bottom: 0;
   list-style: none;

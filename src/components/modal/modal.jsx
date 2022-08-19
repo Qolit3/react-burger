@@ -1,18 +1,14 @@
 import React from "react";
-import './modal.css';
+import modal from'./modal.module.css';
 import ReactDOM from "react-dom";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import PropTypes from 'prop-types';
 
-const reactModals: any = document.querySelector('#react-modals')
+const reactModals = document.querySelector('#react-modals')
 
-
-
-
-
-const Modal = ({ handleClose, children, active }: any) => {
-  function handleKeydown(e:any) {
+const Modal = ({ handleClose, children, active }) => {
+  function handleKeydown(e) {
       return e.key === 'Escape' && handleClose();
   }
 
@@ -27,9 +23,9 @@ const Modal = ({ handleClose, children, active }: any) => {
   return ReactDOM.createPortal(
       (
           <ModalOverlay handleClose={handleClose} active={active}>
-              <div className="modal" >
+              <div className={modal.modal}>
                   { children }
-                  <button onClick={handleClose} className="modal__close" >
+                  <button onClick={handleClose} className={modal.close} >
                       <CloseIcon type="primary" />
                   </button>
               </div>

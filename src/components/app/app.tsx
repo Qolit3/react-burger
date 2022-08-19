@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import Header from '../header/header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import './app.css';
+import styles from './app.module.css'
 import constructordata from '../../util/constructordata.json'
 
 
@@ -24,9 +24,14 @@ function App() {
     }
 
     getProductData()
-    .then(res => res.json())
+    .then(res => {
+      if (res.ok) {
+          return res.json();
+      }
+      return Promise.reject(`Ошибка ${res.status}`);
+    })
     .then(res => setList(res.data))
-      .catch(res => {throw new Error(res)});
+      .catch(res => console.log(res));
   }, [])
 
   
@@ -34,9 +39,9 @@ function App() {
 
 
   return (
-    <div className="app">
+    <div className={styles.app}>
       <Header />
-      <div className='app__main'>
+      <div className={styles.main}>
         <BurgerIngredients list={list}/>
         <BurgerConstructor items={current}/>
       </div>

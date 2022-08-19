@@ -1,13 +1,9 @@
-.header {
-  
+.header { 
   background-color: #1c1c21;
-  
-  width: 100%;
-  
-  
+  width: 100%;  
 }
 
-.header__block {
+.block {
   width: 1240px;
   margin: 0 auto;
   height: 88px;
@@ -17,17 +13,18 @@
   justify-content: space-around;
 }
 
-.header__first-column {
+.column {
   display: flex;
   position: absolute;
+}
+
+.column_left {
   left: 0;
 }
-.header__second-column {
-  display: flex;
-  position: absolute;
+.column_right {
   right: 0;
 }
 
-.header__button-box {
+.button {
   display: flex;
 }
