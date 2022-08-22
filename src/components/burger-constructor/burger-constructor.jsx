@@ -34,14 +34,14 @@ const BurgerConstructor = (props) => {
         )    
       } else if(index !== arr.length - 1) {
         return(
-        <div key={index} className={`${styles.ingredient} mt-4`}>
+        <div key={item._id} className={`${styles.ingredient} mt-4`}>
           <DragIcon type="primary"/>
           <ConstructorElement text={item.name} thumbnail={item.image} price={item.price}/>
         </div>
         )
       } else {
         return(
-          <div key={index}>
+          <div key={item._id}>
             <div  className={`${styles.ingredient} mt-4`}>
               <DragIcon type="primary"/>
               <ConstructorElement text={item.name} thumbnail={item.image} price={item.price}/>
