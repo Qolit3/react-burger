@@ -34,7 +34,7 @@ const Ingredient = (props) => {
     }
   
 
-
+    
   return (
     <li>
       <div className={styles.ingredient}  onClick={openModal}>

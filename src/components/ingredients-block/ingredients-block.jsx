@@ -5,10 +5,11 @@ import ingredientType from '../../util/types';
 
 const IngredientsBlock = (props) => {  
   const renderIngerdients = () => {
-    
-    return props.block.ingredients.map((item, index) => <Ingredient item={item} key={index}/>)
-    //Я правда не знаю, как передать id так, чтобы не выходило ошибки в консоль
-    
+    return (
+      <ul className={`${styles.list} mt-6 ml-4 mr-4`}>
+        {props.block.ingredients.map((item) => <Ingredient item={item} key={item._id+1}/>)}
+      </ul>
+    )
   }
 
   return (
@@ -16,9 +17,9 @@ const IngredientsBlock = (props) => {
       <h2 className='text text_type_main-medium'>
         {props.block.ingredientName}
       </h2>
-      <ul className={`${styles.list} mt-6 ml-4 mr-4`}>
+      
         {renderIngerdients()}
-      </ul>
+      
     </div>
   )  
 }
