@@ -30,15 +30,9 @@ const BurgerIngredients = ({list}) => {
     })   
   },[list])
 
-  const renderIngerdientsBlocks = () => {
-    if(current === '0') {
-      
+  const renderIngerdientsBlocks = () => {      
       return (ingredientsBuns.map((item, index) => <IngredientsBlock key={index} block={item}/>))
-    } else if (current === '1') {
-      return (ingredientsSauces.map((item, index) => <IngredientsBlock key={index} block={item}/>))
-    } else {
-      return (ingredientsMains.map((item, index) => <IngredientsBlock key={index} block={item}/>))
-    }
+    
   }
 
   return (
