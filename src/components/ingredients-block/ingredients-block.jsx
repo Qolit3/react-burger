@@ -6,7 +6,7 @@ import ingredientType from '../../util/types';
 const IngredientsBlock = (props) => {  
   const renderIngerdients = () => {
     
-    return props.block.ingredients.map((item, index) => <Ingredient key={item._id} item={item}/>)
+    return props.block.ingredients.map((item) => <Ingredient key={item._id} item={item}/>)
   }
 
   return (
