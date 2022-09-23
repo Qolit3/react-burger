@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+import {
+  useSelector,
+  useDispatch } from 'react-redux';
 import { 
   ConstructorElement,
   CurrencyIcon,
@@ -7,12 +10,34 @@ import {
 
 import styles from './burger-constructor.module.css'
 import PropTypes from 'prop-types';
-
+import { GET_BURGER_INGREDIENTS } from "../../services/actions/otherActions";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import ingredientType from "../../util/types";
+import { getOrder } from "../../services/actions/createOrderAction";
 
-const BurgerConstructor = (props) => {
+
+
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const allIngredients = useSelector(state => state.allIngredients.ingredients);
+  let currentIngredients = [];
+  if(allIngredients.length) {
+      currentIngredients = [
+      allIngredients[0],
+      allIngredients[2],
+      allIngredients[7],
+      allIngredients[9],
+    ];
+  }
+  useEffect(() => {
+    dispatch({
+      type: GET_BURGER_INGREDIENTS,
+      ingredients: currentIngredients
+    })
+  }, [allIngredients])
+  
+  const list = useSelector(state => state.other.burgerIngredients)
 
   const [active, setActive] = React.useState(false);
 
@@ -21,39 +46,49 @@ const BurgerConstructor = (props) => {
   }
 
   const openModal = () => {
+    dispatch(getOrder(list.map(item => item._id)))
     setActive(true);
   }
 
-  const renderConstructrList = () => {
-    return (props.items.map((item, index, arr) => {
-      if(index === 0 ) {
-        return( 
-        <div key={item._id}  className={styles.ingredient}>
-          <ConstructorElement type="top" text={`${item.name} (верх)`} thumbnail={item.image} price={item.price} isLocked={true}/>
-        </div>
-        )    
-      } else if(index !== arr.length - 1) {
-        return(
-        <div key={item._id} className={`${styles.ingredient} mt-4`}>
-          <DragIcon type="primary"/>
-          <ConstructorElement text={item.name} thumbnail={item.image} price={item.price}/>
-        </div>
-        )
-      } else {
-        return(
-          <div key={item._id}>
-            <div  className={`${styles.ingredient} mt-4`}>
-              <DragIcon type="primary"/>
-              <ConstructorElement text={item.name} thumbnail={item.image} price={item.price}/>
-            </div>
-            <div  className={`${styles.ingredient} mt-4`}>
-              <ConstructorElement type="bottom" text={`${arr[0].name} (низ)`} thumbnail={arr[0].image} price={arr[0].price} isLocked={true}/>
-            </div>
+  let totalPrice = 0;
+  let renderList = [];
+
+  const renderIngredients = () => {
+    list.forEach(item => {
+      if(item.type !== 'bun') {
+        totalPrice = totalPrice + item.price;
+        renderList.push(
+          <div key={item._id} className={`${styles.ingredient} mt-4`}>
+            <DragIcon type="primary"/>
+            <ConstructorElement text={item.name} thumbnail={item.image} price={item.price}/>
           </div>
-        
-          )    
+        )
       }
-  }))
+    })
+  }
+
+  const renderConstructrList = () => {
+    if(list.length){
+      renderIngredients();
+      list.forEach(item => {
+        if(item.type === 'bun') {
+          totalPrice = totalPrice + item.price*2;
+          renderList.push(
+            <div key={item._id}  className={`${styles.ingredient} mt-4`}>
+              <ConstructorElement type="bottom" text={`${item.name} (низ)`} thumbnail={item.image} price={item.price} isLocked={true}/>
+            </div>
+          );
+          renderList.unshift(
+            <div key={item._id+1}  className={styles.ingredient}>
+              <ConstructorElement type="top" text={`${item.name} (верх)`} thumbnail={item.image} price={item.price} isLocked={true}/>
+            </div>
+          );
+        }
+      })
+      return renderList
+    } else{
+      return <p className={`text text_type_main-default`}>Заказ пуст</p>
+    }
   }
 
   return (
@@ -62,16 +97,14 @@ const BurgerConstructor = (props) => {
         {
           renderConstructrList()
         }
-      
       </div>
       <div className={`${styles.result} mt-10`}>
         <div className={`mr-10 ${styles.currency}`}>
-          <p className={`${styles.price} text text_type_digits-default`}>610</p>
+          <p className={`${styles.price} text text_type_digits-default`}>{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
         <Button type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
-
       <Modal handleClose={closeModal} active={active}>
         <OrderDetails orderNumber={'333333'} />
       </Modal>

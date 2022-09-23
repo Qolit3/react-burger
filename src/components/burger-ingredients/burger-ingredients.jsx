@@ -2,11 +2,12 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import IngredientsBlock from '../ingredients-block/ingredients-block';
 import styles from './burger-ingredients.module.css'
+import { useSelector } from 'react-redux';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../util/types';
 
-const BurgerIngredients = ({list}) => {
+const BurgerIngredients = () => {
   const [current, setCurrent] = React.useState('0');
   const [buns, setBuns] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const [sauces, setSauces] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
@@ -14,25 +15,40 @@ const BurgerIngredients = ({list}) => {
   const ingredientsBuns = [buns, sauces, mains];
   const ingredientsSauces = [sauces, mains, buns];
   const ingredientsMains = [mains, buns, sauces];
+
+  const {
+    allIngredients,
+    allIngredientsRequest,
+    allIngredientsFailed } = useSelector(state => ({
+      allIngredients: state.allIngredients.ingredients,
+      allIngredientsRequest: state.allIngredients.ingredientsRequest,
+      allIngredientsFailed: state.allIngredients.ingredientsFailed
+    }))
+
   
   useEffect(() => {
     setBuns( {
       ingredientName: 'Булки',
-      ingredients: list.filter((item) => item.type === 'bun')
+      ingredients: allIngredients.filter((item) => item.type === 'bun')
     })
     setSauces( {
       ingredientName: 'Соусы',
-      ingredients: list.filter((item) => item.type === 'sauce')
+      ingredients: allIngredients.filter((item) => item.type === 'sauce')
     })
     setMains ({
       ingredientName: 'Начинки',
-      ingredients: list.filter((item) => item.type === 'main')
+      ingredients: allIngredients.filter((item) => item.type === 'main')
     })   
-  },[list])
+  },[allIngredients])
 
-  const renderIngerdientsBlocks = () => {      
+  const renderIngerdientsBlocks = () => {    
+    if(allIngredientsFailed) {
+      return <h1 className='text text_type_main-large mt-10'>Не удалось загрузить</h1>
+    } else if(allIngredientsRequest) {
+      return <h1 className='text text_type_main-large mt-10'>Загрузка</h1>
+    } else {
       return (ingredientsBuns.map((item, index) => <IngredientsBlock key={index} block={item}/>))
-    
+    }
   }
 
   return (
@@ -49,9 +65,11 @@ const BurgerIngredients = ({list}) => {
           Начинки
         </Tab>
       </div>
-      <div className={styles.scroll}>
+       
+        <div className={styles.scroll}>
         {renderIngerdientsBlocks()}
       </div>
+
       
     </div>
   )
