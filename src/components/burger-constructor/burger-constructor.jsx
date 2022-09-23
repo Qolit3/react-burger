@@ -9,11 +9,9 @@ import {
   Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './burger-constructor.module.css'
-import PropTypes from 'prop-types';
 import { GET_BURGER_INGREDIENTS } from "../../services/actions/otherActions";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import ingredientType from "../../util/types";
 import { getOrder } from "../../services/actions/createOrderAction";
 
 
@@ -110,10 +108,6 @@ const BurgerConstructor = () => {
       </Modal>
     </div>
   )
-}
-
-BurgerConstructor.propTypes = {
-  items: PropTypes.arrayOf(ingredientType)
 }
 
 export default BurgerConstructor;

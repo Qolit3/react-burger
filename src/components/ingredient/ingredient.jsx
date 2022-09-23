@@ -1,4 +1,5 @@
 import React from "react";
+import { useDispatch } from 'react-redux'
 import styles from './ingredient.module.css'
 import constructordata from '../../util/constructordata.json'
 import PropTypes from 'prop-types';
@@ -7,20 +8,19 @@ import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-c
 import Modal from "../modal/modal";
 import modal from '../modal/modal.module.css'
 import ingredientType from "../../util/types";
+import { SET_MODAL_INGREDIENT } from "../../services/actions/otherActions";
 
 const Ingredient = (props) => {
-
-  const [active, setActive] = React.useState(false);
-
-  const closeModal = () => {
-    setActive(false);
-  }
+  const dispatch = useDispatch();
 
   const openModal = () => {
-    setActive(true);
+    dispatch({
+      type: SET_MODAL_INGREDIENT,
+      object: props.item
+    })
   }
 
-
+//переписать 
   const renderCounter = () => {
     let count = 0;
     constructordata.forEach((item) => {
@@ -33,8 +33,6 @@ const Ingredient = (props) => {
       }
     }
   
-
-    
   return (
     <li>
       <div className={styles.ingredient}  onClick={openModal}>
@@ -46,31 +44,6 @@ const Ingredient = (props) => {
       <p className={`${styles.name} text text_type_main-default mt-1`}>{props.item.name}</p>
       {renderCounter()}
       </div>
-      <Modal handleClose={closeModal} active={active}>
-        <div className="mr-15 ml-15">
-          <h2 className="text text_type_main-large mt-10">Детали ингридиента</h2>
-          <img src={props.item.image_large} />
-          <h3 className={`${modal.text} text_type_main-medium text mt-4`}>{props.item.name}</h3>
-          <div className={`${modal.row} mt-8 mb-15`}>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Калории,ккал</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{props.item.calories}</p>
-            </div>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Белки, г</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{props.item.proteins}</p>
-            </div>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Жиры, г</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{props.item.fat}</p>
-            </div>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Углеводы, г</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{props.item.carbohydrates}</p>
-            </div>
-          </div>
-        </div>
-      </Modal>
     </li>
   )
 }

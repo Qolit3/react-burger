@@ -7,6 +7,7 @@ const initialstate = {
   burgerIngredients: [],
 
   modalIngredient: {},
+  modalStatus: false
 }
 
 export const otherReducers = (state = initialstate, action) => {
@@ -20,12 +21,14 @@ export const otherReducers = (state = initialstate, action) => {
     case SET_MODAL_INGREDIENT:
       return {
         ...state,
-        modalIngredient: action.object
+        modalIngredient: action.object,
+        modalStatus: true
       }
     case REMOVE_MODAL_INGREDIENT:
       return {
         ...state,
-        modalIngredient: {}
+        modalIngredient: {},
+        modalStatus: false
       }
       default:
         return state

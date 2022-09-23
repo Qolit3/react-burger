@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const reactModals = document.querySelector('#react-modals')
 
-const Modal = ({ handleClose, children, active }) => {
+const Modal = ({ handleClose, children }) => {
   function handleKeydown(e) {
       return e.key === 'Escape' && handleClose();
   }
@@ -22,7 +22,7 @@ const Modal = ({ handleClose, children, active }) => {
   
   return ReactDOM.createPortal(
       (
-          <ModalOverlay handleClose={handleClose} active={active}>
+          <ModalOverlay handleClose={handleClose}>
               <div className={modal.modal}>
                   { children }
                   <button onClick={handleClose} className={modal.close} >
@@ -37,7 +37,6 @@ const Modal = ({ handleClose, children, active }) => {
 
 Modal.propTypes = {
   handleClose: PropTypes.func,
-  active: PropTypes.bool,
   children: PropTypes.element
 }
 

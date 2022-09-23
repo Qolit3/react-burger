@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from 'react-redux'
 
 import styles from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
@@ -13,12 +14,13 @@ const ModalOverlay = ({ handleClose, ...props }) => {
       return e.target === ref.current && handleClose();
   }
 
+  const active = useSelector(state => state.other.modalStatus)
   
   return(
     <div
       ref={ref}
       onClick={handleClick}
-      className={props.active
+      className={active
         ? `${styles.overlay} ${styles.overlay_active}` 
         : `${styles.overlay}`}>
             {props.children}
@@ -29,7 +31,6 @@ const ModalOverlay = ({ handleClose, ...props }) => {
 
 ModalOverlay.propTypes = {
   handleClose: PropTypes.func,
-  active: PropTypes.bool,
   children: PropTypes.element
 }
 

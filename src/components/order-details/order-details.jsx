@@ -1,13 +1,8 @@
 import { useSelector } from 'react-redux';
 import { CheckMarkIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './order-details.module.css'
-import PropTypes from 'prop-types';
 
-
-
-
-
-const OrderDetails = ({orderNumber}) => {
+const OrderDetails = () => {
   const {
     order,
     orderRequest,
@@ -16,8 +11,6 @@ const OrderDetails = ({orderNumber}) => {
       orderRequest: state.order.orderRequest,
       orderFailed: state.order.orderFailed
     }))
-
-
 
   return (
     <div className="mr-25 ml-25">
@@ -38,10 +31,6 @@ const OrderDetails = ({orderNumber}) => {
       </>}
     </div>
   )
-}
-
-OrderDetails.propTypes = {
-  orderNumber: PropTypes.string
 }
 
 export default OrderDetails;
