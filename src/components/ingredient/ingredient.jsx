@@ -17,8 +17,9 @@ const Ingredient = (props) => {
       object: props.item
     })
   }
+
   const [, dragRef] = useDrag({
-    type: 'bun',
+    type: 'ingredient',
     item: props.item
   })
 

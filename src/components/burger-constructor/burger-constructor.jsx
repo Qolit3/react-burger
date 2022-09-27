@@ -9,7 +9,7 @@ import {
   Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './burger-constructor.module.css'
-import { ADD_BURGER_INGREDIENTS } from "../../services/actions/otherActions";
+import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from "../../services/actions/otherActions";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { getOrder } from "../../services/actions/createOrderAction";
@@ -19,7 +19,11 @@ import { useDrop } from "react-dnd/dist/hooks/useDrop";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const allIngredients = useSelector(state => state.allIngredients.ingredients);
+  const {allIngredients, list} = useSelector(state => ({
+    allIngredients: state.allIngredients.ingredients,
+    list: state.other.burgerIngredients
+  }));
+
   let currentIngredients = [];
   if(allIngredients.length) {
       currentIngredients = [
@@ -29,17 +33,14 @@ const BurgerConstructor = () => {
       allIngredients[9],
     ];
   }
-  /*useEffect(() => {
-    currentIngredients.forEach(item => {
+  useEffect(() => {
+
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
-        ingredients: item
+        ingredients: currentIngredients
       })
-    })
-  }, [allIngredients])*/
+  }, [allIngredients])
   
-  const list = useSelector(state => state.other.burgerIngredients)
-
   const [active, setActive] = React.useState(false);
 
   const closeModal = () => {
@@ -58,10 +59,17 @@ const BurgerConstructor = () => {
     list.forEach(item => {
       if(item.type !== 'bun') {
         totalPrice = totalPrice + item.price;
+         
         renderList.push(
           <div key={item._id} className={`${styles.ingredient} mt-4`}>
             <DragIcon type="primary"/>
-            <ConstructorElement text={item.name} thumbnail={item.image} price={item.price}/>
+            <ConstructorElement text={item.name} thumbnail={item.image} price={item.price} handleClose={() => {
+              list.splice(list.findIndex(obj => obj._id === item._id), 1)
+              
+              dispatch({
+              type: REMOVE_BURGER_INGREDIENTS,
+              ingredient: list
+            })} }/>
           </div>
         )
       }
@@ -92,13 +100,22 @@ const BurgerConstructor = () => {
     }
   }
 
+  
   const [, dropTarget] = useDrop({
-    accept: ['bun'],
+    accept: 'ingredient',
     drop(item) {
-      console.log(item)
+      let newList = list;
+      
+      if(item.type === 'bun') {
+        newList.splice(list.findIndex(obj => obj.type === item.type), 1, item)
+        
+      } else {
+        newList.push(item)
+      }
+      
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
-        ingredients: item
+        ingredients: newList
       })
     }
   })
