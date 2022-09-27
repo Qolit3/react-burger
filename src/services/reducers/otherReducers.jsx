@@ -1,5 +1,5 @@
 import {
-  GET_BURGER_INGREDIENTS,
+  ADD_BURGER_INGREDIENTS,
   REMOVE_MODAL_INGREDIENT,
   SET_MODAL_INGREDIENT } from "../actions/otherActions"
 
@@ -10,13 +10,17 @@ const initialstate = {
   modalStatus: false
 }
 
+
+
 export const otherReducers = (state = initialstate, action) => {
-  
+  console.log(state.burgerIngredients)
   switch(action.type) {
-    case GET_BURGER_INGREDIENTS: 
+    case ADD_BURGER_INGREDIENTS: 
+    console.log(state)
+    console.log(action.ingredients)
     return {
       ...state,
-      burgerIngredients: action.ingredients
+      burgerIngredients: state.burgerIngredients.push(action.ingredients)
     }
     case SET_MODAL_INGREDIENT:
       return {

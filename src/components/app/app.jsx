@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllIngredients } from '../../services/actions/allIngredientsAction';
 import { REMOVE_MODAL_INGREDIENT } from '../../services/actions/otherActions';
 import Modal from '../modal/modal';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 
 function App() {
@@ -29,8 +31,10 @@ function App() {
     <div className={styles.app}>
       <Header />
       <div className={styles.main}>
-        <BurgerIngredients/>
-        <BurgerConstructor/>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients/>
+          <BurgerConstructor/>
+        </DndProvider>
       </div>
       <Modal handleClose={closeModal}>
         <div className="mr-15 ml-15">

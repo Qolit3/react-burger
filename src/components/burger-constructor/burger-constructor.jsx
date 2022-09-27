@@ -9,10 +9,11 @@ import {
   Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './burger-constructor.module.css'
-import { GET_BURGER_INGREDIENTS } from "../../services/actions/otherActions";
+import { ADD_BURGER_INGREDIENTS } from "../../services/actions/otherActions";
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { getOrder } from "../../services/actions/createOrderAction";
+import { useDrop } from "react-dnd/dist/hooks/useDrop";
 
 
 
@@ -28,12 +29,14 @@ const BurgerConstructor = () => {
       allIngredients[9],
     ];
   }
-  useEffect(() => {
-    dispatch({
-      type: GET_BURGER_INGREDIENTS,
-      ingredients: currentIngredients
+  /*useEffect(() => {
+    currentIngredients.forEach(item => {
+      dispatch({
+        type: ADD_BURGER_INGREDIENTS,
+        ingredients: item
+      })
     })
-  }, [allIngredients])
+  }, [allIngredients])*/
   
   const list = useSelector(state => state.other.burgerIngredients)
 
@@ -89,9 +92,20 @@ const BurgerConstructor = () => {
     }
   }
 
+  const [, dropTarget] = useDrop({
+    accept: ['bun'],
+    drop(item) {
+      console.log(item)
+      dispatch({
+        type: ADD_BURGER_INGREDIENTS,
+        ingredients: item
+      })
+    }
+  })
+
   return (
     <div className={`${styles.constructor} mt-25 ml-4 mr-4`}>
-      <div className={styles.list}>
+      <div ref={dropTarget}  className={styles.list}>
         {
           renderConstructrList()
         }
