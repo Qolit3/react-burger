@@ -25,7 +25,7 @@ const BurgerIngredients = () => {
       allIngredientsFailed: state.allIngredients.ingredientsFailed
     }))
 
-    
+
   
   useEffect(() => {
     setBuns( {
@@ -67,7 +67,7 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
        
-        <div className={styles.scroll}>
+      <div id='scroll' className={styles.scroll}>
         {renderIngerdientsBlocks()}
       </div>
 

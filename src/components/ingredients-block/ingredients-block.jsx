@@ -1,9 +1,10 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import React, { createRef, useEffect } from 'react'
 import Ingredient from '../ingredient/ingredient';
 import styles from './ingredients-block.module.css'
 import PropTypes from 'prop-types';
 import ingredientType from '../../util/types';
+
 
 const IngredientsBlock = (props) => {  
   const renderIngerdients = () => {
@@ -14,6 +15,9 @@ const IngredientsBlock = (props) => {
     )
   }
   const ref = React.createRef();
+  const pos = useSelector(state => state.other)
+
+  const dispatch = useDispatch();  
 
   let type;
   if(props.block.ingredientName === 'Булки') {
@@ -23,16 +27,17 @@ const IngredientsBlock = (props) => {
   } else {
     type = 'MAINS'
   }
-  const dispatch = useDispatch();
-
   useEffect(() => {
+    const scroll = document.querySelector('#scroll');
     const top = ref.current.getBoundingClientRect().top;
-    console.log(top)
-    dispatch({
-      type: `CHANGE_${type}_TAB_POSITION`,
-      pos: top
+    scroll.addEventListener('scroll', () => {
+      console.log(top)
+      dispatch({
+        type: `CHANGE_${type}_TAB_POSITION`,
+        pos: top
+      })
     })
-  }, [ref])
+  }, [])
 
   
   

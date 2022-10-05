@@ -22,7 +22,6 @@ const initialstate = {
 
 
 export const otherReducers = (state = initialstate, action) => {
-  
   switch(action.type) {
     case ADD_BURGER_INGREDIENTS: 
     return {
@@ -30,7 +29,6 @@ export const otherReducers = (state = initialstate, action) => {
       burgerIngredients: action.ingredients
     }
     case REMOVE_BURGER_INGREDIENTS:
-      console.log(action.ingredient)
       return {
         ...state,
         burgerIngredients: action.ingredient
