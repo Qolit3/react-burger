@@ -25,6 +25,7 @@ const BurgerIngredients = () => {
       allIngredientsFailed: state.allIngredients.ingredientsFailed
     }))
 
+    
   
   useEffect(() => {
     setBuns( {

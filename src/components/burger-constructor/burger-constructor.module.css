@@ -13,6 +13,10 @@
   justify-content: space-between;  
 }
 
+.ingredient_hovered{
+  box-shadow: 0 0 3px white;
+}
+
 .ingredient:first-of-type,
 .ingredient:last-of-type {
   justify-content: end;

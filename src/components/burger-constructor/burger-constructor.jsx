@@ -14,6 +14,7 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { getOrder } from "../../services/actions/createOrderAction";
 import { useDrop } from "react-dnd/dist/hooks/useDrop";
+import { ConstructorItem } from "../constructor-item/constructor-item";
 
 
 
@@ -28,9 +29,12 @@ const BurgerConstructor = () => {
   if(allIngredients.length) {
       currentIngredients = [
       allIngredients[0],
-      allIngredients[2],
-      allIngredients[7],
-      allIngredients[9],
+      {...allIngredients[2],
+      order: 1},
+      {...allIngredients[7],
+      order: 2},
+      {...allIngredients[9],
+      order: 3},
     ];
   }
   useEffect(() => {
@@ -56,24 +60,13 @@ const BurgerConstructor = () => {
   let renderList = [];
 
   const renderIngredients = () => {
-    list.forEach(item => {
-      if(item.type !== 'bun') {
-        totalPrice = totalPrice + item.price;
-         
-        renderList.push(
-          <div key={item._id} className={`${styles.ingredient} mt-4`}>
-            <DragIcon type="primary"/>
-            <ConstructorElement text={item.name} thumbnail={item.image} price={item.price} handleClose={() => {
-              list.splice(list.findIndex(obj => obj._id === item._id), 1)
-              
-              dispatch({
-              type: REMOVE_BURGER_INGREDIENTS,
-              ingredient: list
-            })} }/>
-          </div>
-        )
-      }
-    })
+    for(let i = 1; i < list.length; i++) {
+      renderList.push(
+        <ConstructorItem ingredient={list.find(item => item.order === i)} />
+        );
+      totalPrice = totalPrice + list[i].price;
+    }
+    
   }
 
   const renderConstructrList = () => {
@@ -83,14 +76,10 @@ const BurgerConstructor = () => {
         if(item.type === 'bun') {
           totalPrice = totalPrice + item.price*2;
           renderList.push(
-            <div key={item._id}  className={`${styles.ingredient} mt-4`}>
-              <ConstructorElement type="bottom" text={`${item.name} (низ)`} thumbnail={item.image} price={item.price} isLocked={true}/>
-            </div>
+            <ConstructorItem ingredient={item} position={'bottom'} />
           );
           renderList.unshift(
-            <div key={item._id+1}  className={styles.ingredient}>
-              <ConstructorElement type="top" text={`${item.name} (верх)`} thumbnail={item.image} price={item.price} isLocked={true}/>
-            </div>
+            <ConstructorItem ingredient={item} position={'top'} />
           );
         }
       })
@@ -105,14 +94,11 @@ const BurgerConstructor = () => {
     accept: 'ingredient',
     drop(item) {
       let newList = list;
-      
       if(item.type === 'bun') {
         newList.splice(list.findIndex(obj => obj.type === item.type), 1, item)
-        
       } else {
-        newList.push(item)
+        newList.push({...item, order: list.length})
       }
-      
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
         ingredients: newList
