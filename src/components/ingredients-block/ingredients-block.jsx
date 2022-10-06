@@ -29,14 +29,17 @@ const IngredientsBlock = (props) => {
   }
   useEffect(() => {
     const scroll = document.querySelector('#scroll');
-    const top = ref.current.getBoundingClientRect().top;
-    scroll.addEventListener('scroll', () => {
-      console.log(top)
+    const update = () => {
+      const top = document.querySelector(`#title${props.id}`).getBoundingClientRect().top;
+      //console.log(top);
       dispatch({
         type: `CHANGE_${type}_TAB_POSITION`,
         pos: top
       })
-    })
+    }
+    
+    scroll.addEventListener('scroll', update)
+    return () => {scroll.removeEventListener('scroll', update)}
   }, [])
 
   
@@ -44,7 +47,7 @@ const IngredientsBlock = (props) => {
 
   return (
     <div className='mt-10'>
-      <h2 ref={ref} className='text text_type_main-medium'>
+      <h2 ref={ref} id={`title${props.id}`} className='text text_type_main-medium'>
         {props.block.ingredientName}
       </h2>
         {renderIngerdients()}

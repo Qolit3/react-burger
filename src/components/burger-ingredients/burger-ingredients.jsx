@@ -19,10 +19,16 @@ const BurgerIngredients = () => {
   const {
     allIngredients,
     allIngredientsRequest,
-    allIngredientsFailed } = useSelector(state => ({
+    allIngredientsFailed,
+    bunsPos,
+    saucesPos,
+    mainsPos } = useSelector(state => ({
       allIngredients: state.allIngredients.ingredients,
       allIngredientsRequest: state.allIngredients.ingredientsRequest,
-      allIngredientsFailed: state.allIngredients.ingredientsFailed
+      allIngredientsFailed: state.allIngredients.ingredientsFailed,
+      bunsPos: state.other.bunsTabPos,
+      saucesPos: state.other.saucesTabPos,
+      mainsPos: state.other.mainsTabPos
     }))
 
 
@@ -48,9 +54,27 @@ const BurgerIngredients = () => {
     } else if(allIngredientsRequest) {
       return <h1 className='text text_type_main-large mt-10'>Загрузка</h1>
     } else {
-      return (ingredientsBuns.map((item, index) => <IngredientsBlock key={index} block={item}/>))
+      return (ingredientsBuns.map((item, index) => <IngredientsBlock key={index} id={index} block={item}/>))
     }
   }
+  
+
+  useEffect(() => {
+    const tabsPos = document.querySelector('#scroll').getBoundingClientRect().top;
+    const bunsDif = Math.abs(bunsPos - tabsPos);
+    const saucesDif = Math.abs(saucesPos - tabsPos);
+    const mainsDif = Math.abs(mainsPos - tabsPos);
+    
+    if(bunsDif < saucesDif && bunsDif < mainsDif) {
+      setCurrent('0')
+    } else if( saucesDif < mainsDif) {
+      setCurrent('1')
+    } else {
+      setCurrent('2');
+    }
+    console.log(current)
+
+  }, [bunsPos] )
 
   return (
     <div className={styles.ingredients}>
