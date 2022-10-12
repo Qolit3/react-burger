@@ -1,10 +1,14 @@
 import { allIngredients } from "./allIngredientsReducer"
-import { otherReducers } from "./otherReducers";
 import { order } from "./createOrderReducer";
 import { combineReducers } from 'redux';
+import { burgerIngReducer } from "./burgerIngReducers";
+import { modalReducer } from "./modalReducer";
+import { tabsReducer } from "./tabsReducer";
 
 export const rootReducer = combineReducers({
   allIngredients,
-  other: otherReducers,
-  order
+  burgerIng: burgerIngReducer,
+  order,
+  modal: modalReducer,
+  tabs: tabsReducer
 })

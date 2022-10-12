@@ -1,12 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/otherActions';
+
 import styles from '../burger-constructor/burger-constructor.module.css'
+import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/burgerIngActions';
 
 
 export const ConstructorItem = ({ingredient, position}) => {
-  const list = useSelector(state => state.other.burgerIngredients)
+  const list = useSelector(state => state.burgerIng.burgerIngredients)
   const dispatch = useDispatch();
 
   const [, dragRef] = useDrag({
@@ -20,12 +21,8 @@ export const ConstructorItem = ({ingredient, position}) => {
       let newList = list;
       let change;
       change = ingredient.order;
-      console.log(item.order);
-      console.log(ingredient.order);
       newList[list.findIndex(obj => obj.order === ingredient.order)].order = item.order;
       newList[list.findIndex(obj => obj.order === item.order)].order = change;
-      console.log(item.order);
-      console.log(ingredient.order);
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
         ingredients: newList

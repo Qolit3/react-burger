@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from 'react-redux';
-import React, { createRef, useEffect } from 'react'
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react'
 import Ingredient from '../ingredient/ingredient';
 import styles from './ingredients-block.module.css'
 import PropTypes from 'prop-types';
@@ -14,8 +14,6 @@ const IngredientsBlock = (props) => {
       </ul>
     )
   }
-  const ref = React.createRef();
-  const pos = useSelector(state => state.other)
 
   const dispatch = useDispatch();  
 
@@ -31,7 +29,6 @@ const IngredientsBlock = (props) => {
     const scroll = document.querySelector('#scroll');
     const update = () => {
       const top = document.querySelector(`#title${props.id}`).getBoundingClientRect().top;
-      //console.log(top);
       dispatch({
         type: `CHANGE_${type}_TAB_POSITION`,
         pos: top
@@ -47,7 +44,7 @@ const IngredientsBlock = (props) => {
 
   return (
     <div className='mt-10'>
-      <h2 ref={ref} id={`title${props.id}`} className='text text_type_main-medium'>
+      <h2 id={`title${props.id}`} className='text text_type_main-medium'>
         {props.block.ingredientName}
       </h2>
         {renderIngerdients()}

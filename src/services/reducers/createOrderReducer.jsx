@@ -1,12 +1,15 @@
 import {
   GET_ORDER,
   GET_ORDER_FAILED,
-  GET_ORDER_SUCCESS } from "../actions/createOrderAction"
+  GET_ORDER_SUCCESS, 
+  REMOVE_ORDER_MODAL, 
+  SET_ORDER_MODAL} from "../actions/createOrderAction"
 
 const initialstate = { 
   orderRequest: false,
   orderFailed: false,
-  order: {}
+  order: {},
+  orderModal: false
 }
 
 export const order = (state = initialstate, action) => {
@@ -33,6 +36,18 @@ export const order = (state = initialstate, action) => {
         ...state,
         orderRequest: false,
         orderFailed: true 
+      }
+    }
+    case SET_ORDER_MODAL: {
+      return {
+        ...state,
+        orderModal: true
+      }
+    }
+    case REMOVE_ORDER_MODAL: {
+      return {
+        ...state,
+        orderModal: false
       }
     }
     default:

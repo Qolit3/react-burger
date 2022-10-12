@@ -1,20 +1,18 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import IngredientsBlock from '../ingredients-block/ingredients-block';
+import { useEffect, useMemo, useState } from 'react';
+import PropTypes from 'prop-types'
 import styles from './burger-ingredients.module.css'
 import { useSelector } from 'react-redux';
 
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../util/types';
+import { RenderAllIngredients } from '../render-all-ingredients/render-all-ingredients';
 
 const BurgerIngredients = () => {
-  const [current, setCurrent] = React.useState('0');
-  const [buns, setBuns] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
-  const [sauces, setSauces] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
-  const [mains, setMains] = React.useState({ingredientName: 'Загрузка', ingredients: [{}] });
+  const [current, setCurrent] = useState('0');
+  const [buns, setBuns] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
+  const [sauces, setSauces] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
+  const [mains, setMains] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const ingredientsBuns = [buns, sauces, mains];
-  const ingredientsSauces = [sauces, mains, buns];
-  const ingredientsMains = [mains, buns, sauces];
 
   const {
     allIngredients,
@@ -26,12 +24,25 @@ const BurgerIngredients = () => {
       allIngredients: state.allIngredients.ingredients,
       allIngredientsRequest: state.allIngredients.ingredientsRequest,
       allIngredientsFailed: state.allIngredients.ingredientsFailed,
-      bunsPos: state.other.bunsTabPos,
-      saucesPos: state.other.saucesTabPos,
-      mainsPos: state.other.mainsTabPos
+      bunsPos: state.tabs.bunsTabPos,
+      saucesPos: state.tabs.saucesTabPos,
+      mainsPos: state.tabs.mainsTabPos
     }))
 
-
+    const filters = useMemo(() => (allIngredients) => {
+      setBuns( {
+        ingredientName: 'Булки',
+        ingredients: allIngredients.filter((item) => item.type === 'bun')
+      })
+      setSauces( {
+        ingredientName: 'Соусы',
+        ingredients: allIngredients.filter((item) => item.type === 'sauce')
+      })
+      setMains ({
+        ingredientName: 'Начинки',
+        ingredients: allIngredients.filter((item) => item.type === 'main')
+      }) 
+    }, [allIngredients])
   
   useEffect(() => {
     setBuns( {
@@ -48,17 +59,6 @@ const BurgerIngredients = () => {
     })   
   },[allIngredients])
 
-  const renderIngerdientsBlocks = () => {    
-    if(allIngredientsFailed) {
-      return <h1 className='text text_type_main-large mt-10'>Не удалось загрузить</h1>
-    } else if(allIngredientsRequest) {
-      return <h1 className='text text_type_main-large mt-10'>Загрузка</h1>
-    } else {
-      return (ingredientsBuns.map((item, index) => <IngredientsBlock key={index} id={index} block={item}/>))
-    }
-  }
-  
-
   useEffect(() => {
     const tabsPos = document.querySelector('#scroll').getBoundingClientRect().top;
     const bunsDif = Math.abs(bunsPos - tabsPos);
@@ -72,7 +72,6 @@ const BurgerIngredients = () => {
     } else {
       setCurrent('2');
     }
-    console.log(current)
 
   }, [bunsPos] )
 
@@ -91,11 +90,7 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
        
-      <div id='scroll' className={styles.scroll}>
-        {renderIngerdientsBlocks()}
-      </div>
-
-      
+      <RenderAllIngredients items={ingredientsBuns} />   
     </div>
   )
 }

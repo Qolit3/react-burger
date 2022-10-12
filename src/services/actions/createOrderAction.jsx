@@ -3,6 +3,8 @@ import { api } from "../../util/constants";
 export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
+export const SET_ORDER_MODAL = 'SET_ORDER_MODAL';
+export const REMOVE_ORDER_MODAL = 'REMOVE_ORDER_MODAL';
 
 export function getOrder(ingredientsId) {
   return function(dispatch) {

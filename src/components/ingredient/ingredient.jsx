@@ -6,7 +6,8 @@ import PropTypes from 'prop-types';
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../util/types";
-import { SET_MODAL_INGREDIENT } from "../../services/actions/otherActions";
+import { SET_MODAL_INGREDIENT } from "../../services/actions/modalActions";
+
 
 const Ingredient = (props) => {
   const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const Ingredient = (props) => {
     item: props.item
   })
 
-  const burgerIngredients = useSelector(state => state.other.burgerIngredients)
+  const burgerIngredients = useSelector(state => state.burgerIng.burgerIngredients)
 
   const renderCounter = () => {
     let count = burgerIngredients.reduce((prev, item) => item.name === props.item.name? prev+1 : prev , 0)
