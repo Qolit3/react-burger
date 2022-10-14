@@ -68,14 +68,13 @@ const BurgerConstructor = () => {
       } else {
         price = price + item.price;
       }
-      console.log('in ', price);
     })
     
     return price
   }
-  console.log(list);
-  let totalPrice = useMemo(() => priceMath(list), [list])
-  console.log('out ',totalPrice);
+
+  let totalPrice = useMemo(() => priceMath(list), [list.length, list[0]])
+  //Почему то не работал этот хук, если я в deps передавал просто list
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',

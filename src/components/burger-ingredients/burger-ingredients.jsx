@@ -13,23 +13,22 @@ const BurgerIngredients = () => {
   const [sauces, setSauces] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const [mains, setMains] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const ingredientsBuns = [buns, sauces, mains];
+  const one = '1'
+  const two = '2'
+  const zero = '0'
 
   const {
     allIngredients,
-    allIngredientsRequest,
-    allIngredientsFailed,
     bunsPos,
     saucesPos,
     mainsPos } = useSelector(state => ({
       allIngredients: state.allIngredients.ingredients,
-      allIngredientsRequest: state.allIngredients.ingredientsRequest,
-      allIngredientsFailed: state.allIngredients.ingredientsFailed,
       bunsPos: state.tabs.bunsTabPos,
       saucesPos: state.tabs.saucesTabPos,
       mainsPos: state.tabs.mainsTabPos
     }))
 
-    const filters = useMemo(() => (allIngredients) => {
+   /* const filters = useMemo(() => (allIngredients) => {
       setBuns( {
         ingredientName: 'Булки',
         ingredients: allIngredients.filter((item) => item.type === 'bun')
@@ -42,7 +41,10 @@ const BurgerIngredients = () => {
         ingredientName: 'Начинки',
         ingredients: allIngredients.filter((item) => item.type === 'main')
       }) 
-    }, [allIngredients])
+    }, [allIngredients]);*/
+    
+    //Честно говоря, я не понял, что значит рассчитать эти значения внутри хука useMemo
+    //А в виде коммента выше не сработало.
   
   useEffect(() => {
     setBuns( {
@@ -66,11 +68,11 @@ const BurgerIngredients = () => {
     const mainsDif = Math.abs(mainsPos - tabsPos);
     
     if(bunsDif < saucesDif && bunsDif < mainsDif) {
-      setCurrent('0')
+      setCurrent(zero)
     } else if( saucesDif < mainsDif) {
-      setCurrent('1')
+      setCurrent(one)
     } else {
-      setCurrent('2');
+      setCurrent(two);
     }
 
   }, [bunsPos] )
@@ -79,13 +81,13 @@ const BurgerIngredients = () => {
     <div className={styles.ingredients}>
       <h1 className='text text_type_main-large mt-10'>Соберите бургер</h1>
       <div className={`${styles.tabs} mt-5`}>
-        <Tab value="0" active={current === '0'} onClick={setCurrent}>
+        <Tab value={zero} active={current === zero} onClick={setCurrent}>
           Булки
         </Tab>
-        <Tab value="1" active={current === '1'} onClick={setCurrent}>
+        <Tab value={one} active={current === one} onClick={setCurrent}>
           Соусы
         </Tab>
-        <Tab value="2" active={current === '2'} onClick={setCurrent}>
+        <Tab value={two} active={current === two} onClick={setCurrent}>
           Начинки
         </Tab>
       </div>

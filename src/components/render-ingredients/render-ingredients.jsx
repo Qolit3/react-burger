@@ -7,12 +7,13 @@ export const RenderIngerdients = ({list}) => {
     let renderList = [];
     const bun = list.find(item => item.type === 'bun');    
   
-    for(let i = 1; i< list.length; i++) {
+    for(let i = 1; i < list.length; i++) {
+      
       renderList.push(
         <ConstructorItem key={uuidv4()} ingredient={list.find(item => item.order === i)}/>
       )
     }
-  
+    
     renderList.push(
       <ConstructorItem key={uuidv4()} ingredient={bun} position={'bottom'}/>
     )
