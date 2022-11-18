@@ -13,6 +13,7 @@ import { useDrop } from "react-dnd/dist/hooks/useDrop";
 import { ADD_BURGER_INGREDIENTS } from "../../services/actions/burgerIngActions";
 import { RenderIngerdients } from "../render-ingredients/render-ingredients";
 import { bun } from "../../util/constants";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -49,7 +50,12 @@ const BurgerConstructor = () => {
     })
   }
   
+  const navigate = useNavigate();
+  const isAuth = useSelector(store => store.user.isAuthorized)
   const openModal = () => {
+    if(!isAuth) {
+      return navigate('/login')
+    }
     let idList = list.map(item => item._id);
     idList.push(list[0]._id);
     dispatch(getOrder(idList));
@@ -74,7 +80,6 @@ const BurgerConstructor = () => {
   }
 
   let totalPrice = useMemo(() => priceMath(list), [list.length, list[0]])
-  //Почему то не работал этот хук, если я в deps передавал просто list
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',

@@ -17,6 +17,7 @@ const composeEnhancers =
 const root = ReactDOM.createRoot(
   document.getElementById('root')
 );
+
 const enhancers = compose(applyMiddleware(thunk), composeEnhancers())
 
 

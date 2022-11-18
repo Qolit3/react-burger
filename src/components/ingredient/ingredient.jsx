@@ -7,15 +7,18 @@ import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../util/types";
 import { SET_MODAL_INGREDIENT } from "../../services/actions/modalActions";
+import { useNavigate } from "react-router-dom";
 
 
 const Ingredient = (props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const openModal = () => {
+    
+    navigate(`/ingredients/${props.item._id}?q=1`);
     dispatch({
-      type: SET_MODAL_INGREDIENT,
-      object: props.item
+      type: SET_MODAL_INGREDIENT
     })
   }
 

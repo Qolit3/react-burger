@@ -1,69 +1,80 @@
-import React, { useEffect } from 'react';
+import { useEffect} from 'react';
 import Header from '../header/header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import styles from './app.module.css'
 import modal from '../modal/modal.module.css'
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllIngredients } from '../../services/actions/allIngredientsAction';
-
 import Modal from '../modal/modal';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from "react-dnd-html5-backend";
 import { REMOVE_MODAL_INGREDIENT } from '../../services/actions/modalActions';
-
+import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate
+ } from 'react-router-dom';
+import { LoginPage } from '../../pages/login/Login.jsx'
+import { Register } from '../../pages/register/register';
+import { Constructor } from '../../pages/constructor/constructor';
+import { ForgotPass } from '../../pages/forgotPass/forgotPass';
+import { loginUpdate } from '../../services/actions/updateLoginAction';
+import { getCookie } from '../../util/functions';
+import { Profile } from '../../pages/profile/Profile';
+import { ProtectedRoute } from '../protected-route/protected-route';
+import { ResetPass } from '../../pages/resetPass/resetPass';
+import { IngredientDetails } from '../../pages/ingredientDetails/ingredientDetails';
+import { ProfileChange } from '../profile-change/profile-change';
 
 function App() {
   const dispatch = useDispatch();
-
+/*  const update = () => {
+    console.log(getCookie('refreshToken'))
+    console.log(getCookie('accessToken'))
+    dispatch(loginUpdate(getCookie('refreshToken')))
+  }
+  
+  let loginUpdateInterval = setInterval(update, 5000)
+  
+*/
   useEffect(() => {
-    dispatch(getAllIngredients())
+    dispatch(getAllIngredients());
+    //loginUpdate(getCookie('refreshToken'))
+    //return clearInterval(loginUpdateInterval);
   }, [])
 
   const closeModal = () => {
+    window.history.back();
     dispatch({
       type: REMOVE_MODAL_INGREDIENT
     })
   }
-  const active = useSelector(state => state.modal.modalStatus)
   
-
-  const item = useSelector(state => state.modal.modalIngredient)
-
+  const isAuthorized = useSelector(store => store.user.isAuthorized)
+  console.log(isAuthorized)
   return (
     <div className={styles.app}>
+      
+      <Router>
       <Header />
-      <div className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients/>
-          <BurgerConstructor/>
-        </DndProvider>
-      </div>
-      <Modal id={1} active={active} handleClose={closeModal}>
-        <div className="mr-15 ml-15">
-          <h2 className="text text_type_main-large mt-10">Детали ингридиента</h2>
-          <img src={item.image_large} />
-          <h3 className={`${modal.text} text_type_main-medium text mt-4`}>{item.name}</h3>
-          <div className={`${modal.row} mt-8 mb-15`}>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Калории,ккал</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{item.calories}</p>
-            </div>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Белки, г</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{item.proteins}</p>
-            </div>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Жиры, г</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{item.fat}</p>
-            </div>
-            <div>
-              <p className={`${modal.text} text_type_main-default text text_color_inactive`}>Углеводы, г</p>
-              <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{item.carbohydrates}</p>
-            </div>
-          </div>
-        </div>
-      </Modal>
+        <Routes>
+          <Route path='/' exact={true} element={<Constructor />}>
+            <Route path='/ingredients/:id' exact={true} element={
+                <IngredientDetails
+                  id={1}
+                  handleClose={closeModal}
+                />
+              }
+            />
+          </Route>
+          <Route element={<ProtectedRoute path='/' isAuth={!isAuthorized}/>}>
+            <Route path='/login' exact={true} element={<LoginPage/>} />
+            <Route path='/register' exact={true} element={<Register/>} />
+            <Route path='/forgot-password' exact={true} element={<ForgotPass/>}/>
+            <Route path='/reset-password' exact={true} element={<ResetPass/>}/>
+          </Route>          
+          <Route element={<ProtectedRoute path='/login' isAuth={isAuthorized}/>}>
+            <Route path='/profile' exact={true} element={<Profile />}>
+              <Route path='/profile' exact={true} element={<ProfileChange/>} />
+              <Route path='/profile/orders' exact={true} element={<div/>} />
+            </Route>
+          </Route>
+        </Routes>
+      </Router>
     </div>
   );
 }

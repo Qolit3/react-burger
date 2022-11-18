@@ -7,7 +7,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ingredientType from '../../util/types';
 import { RenderAllIngredients } from '../render-all-ingredients/render-all-ingredients';
 
-const BurgerIngredients = () => {
+export const BurgerIngredients = () => {
   const [current, setCurrent] = useState('0');
   const [buns, setBuns] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
   const [sauces, setSauces] = useState({ingredientName: 'Загрузка', ingredients: [{}] });
@@ -16,7 +16,7 @@ const BurgerIngredients = () => {
   const one = '1'
   const two = '2'
   const zero = '0'
-
+  
   const {
     allIngredients,
     bunsPos,
@@ -27,24 +27,6 @@ const BurgerIngredients = () => {
       saucesPos: state.tabs.saucesTabPos,
       mainsPos: state.tabs.mainsTabPos
     }))
-
-   /* const filters = useMemo(() => (allIngredients) => {
-      setBuns( {
-        ingredientName: 'Булки',
-        ingredients: allIngredients.filter((item) => item.type === 'bun')
-      })
-      setSauces( {
-        ingredientName: 'Соусы',
-        ingredients: allIngredients.filter((item) => item.type === 'sauce')
-      })
-      setMains ({
-        ingredientName: 'Начинки',
-        ingredients: allIngredients.filter((item) => item.type === 'main')
-      }) 
-    }, [allIngredients]);*/
-    
-    //Честно говоря, я не понял, что значит рассчитать эти значения внутри хука useMemo
-    //А в виде коммента выше не сработало.
   
   useEffect(() => {
     setBuns( {
@@ -92,7 +74,7 @@ const BurgerIngredients = () => {
         </Tab>
       </div>
        
-      <RenderAllIngredients items={ingredientsBuns} />   
+      <RenderAllIngredients items={ingredientsBuns} />
     </div>
   )
 }
