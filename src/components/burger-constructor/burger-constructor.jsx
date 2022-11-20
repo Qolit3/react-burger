@@ -26,9 +26,10 @@ const BurgerConstructor = () => {
   }));
 
   let currentIngredients = [];
-  if(allIngredients.length) {
+  /*if(allIngredients.length) {
       currentIngredients = [
-      allIngredients[0],
+      {...allIngredients[0],
+      order: 0},
       {...allIngredients[2],
       order: 1},
       {...allIngredients[7],
@@ -36,7 +37,7 @@ const BurgerConstructor = () => {
       {...allIngredients[9],
       order: 3},
     ];
-  }
+  }*/
   useEffect(() => {
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
@@ -53,6 +54,7 @@ const BurgerConstructor = () => {
   const navigate = useNavigate();
   const isAuth = useSelector(store => store.user.isAuthorized)
   const openModal = () => {
+    console.log(isAuth)
     if(!isAuth) {
       return navigate('/login')
     }

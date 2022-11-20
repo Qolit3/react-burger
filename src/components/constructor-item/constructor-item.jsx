@@ -1,6 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
+import { v4 as uuidv4} from 'uuid';
 
 import styles from '../burger-constructor/burger-constructor.module.css'
 import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/burgerIngActions';
@@ -23,8 +24,19 @@ export const ConstructorItem = ({ingredient, position}) => {
       let newList = list;
       let change;
       change = ingredient.order;
-      newList[list.findIndex(obj => obj.order === ingredient.order)].order = item.order;
-      newList[list.findIndex(obj => obj.order === item.order)].order = change;
+      console.log(ingredient.order);
+      console.log(item.order);
+      console.log(list.map(item => item.order))
+      console.log(newList)
+      //console.log(list.findIndex(obj => obj.order === ingredient.order))
+      newList[ingredient.order].order = item.order;
+      //console.log(newList[1].order)
+      newList[item.order].order = change;
+      //console.log(newList.map(item => item.order))
+      newList.sort((a, b) => {
+        if(a.order > b.order) return 1;
+        if(a.order < b.order) return -1;
+      })
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
         ingredients: newList
@@ -43,20 +55,20 @@ export const ConstructorItem = ({ingredient, position}) => {
   if(ingredient.type === 'bun') {
     if(position === 'top') {
       return (
-        <div  key={ingredient._id}  className={`${styles.ingredient}`}>
+        <div  key={uuidv4()}  className={`${styles.ingredient}`}>
           <ConstructorElement type="top" text={`${ingredient.name} (верх)`} thumbnail={ingredient.image} price={ingredient.price} isLocked={true}/>
         </div>
       )
     } else {
       return (
-        <div  key={ingredient._id+1}  className={`${styles.ingredient} mt-4`}>
+        <div  key={uuidv4()}  className={`${styles.ingredient} mt-4`}>
           <ConstructorElement type="bottom" text={`${ingredient.name} (низ)`} thumbnail={ingredient.image} price={ingredient.price} isLocked={true}/>
         </div>
       )
     }
   } else {
     return (
-      <div ref={dropTarget}  key={ingredient._id} >
+      <div ref={dropTarget}  key={uuidv4()} >
         <div ref={dragRef} className={`${styles.ingredient} mt-4 ${isHover && styles.ingredient_hovered}`}>
         <DragIcon type="primary"/>
         <ConstructorElement text={ingredient.name} thumbnail={ingredient.image} price={ingredient.price} handleClose={() => {

@@ -11,7 +11,7 @@ export function loginUpdate(token) {
     dispatch({
       type: LOGIN_UPDATE
     })
-    fetch(`${api}/auth/token`, {
+    return fetch(`${api}/auth/token`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -23,10 +23,8 @@ export function loginUpdate(token) {
     .then(res => res.json())
     .then(res => {
       if (res && res.success) {
-        
         setCookie('refreshToken', res.refreshToken);
         setCookie('accessToken', res.accessToken.split('Bearer ')[1])
-        
         
         dispatch({
           type: LOGIN_UPDATE_SUCCESS
@@ -34,6 +32,7 @@ export function loginUpdate(token) {
         dispatch({
           type: SUCCESSFUL_AUTHORIZATION
         })
+        
       } else {
         dispatch({
           type: LOGIN_UPDATE_FAILED
@@ -41,6 +40,7 @@ export function loginUpdate(token) {
         dispatch({
           type: FAILED_AUTHORIZATION
         })
+        
         console.log(res)
       }
     })

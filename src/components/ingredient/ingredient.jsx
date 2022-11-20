@@ -16,7 +16,7 @@ const Ingredient = (props) => {
 
   const openModal = () => {
     
-    navigate(`/ingredients/${props.item._id}?q=1`);
+    navigate(`/ingredients/${props.item._id}`);
     dispatch({
       type: SET_MODAL_INGREDIENT
     })

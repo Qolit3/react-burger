@@ -31,9 +31,10 @@ function App() {
   let loginUpdateInterval = setInterval(update, 5000)
   
 */
+
   useEffect(() => {
     dispatch(getAllIngredients());
-    //loginUpdate(getCookie('refreshToken'))
+    dispatch(loginUpdate(getCookie('refreshToken')));
     //return clearInterval(loginUpdateInterval);
   }, [])
 
@@ -45,7 +46,7 @@ function App() {
   }
   
   const isAuthorized = useSelector(store => store.user.isAuthorized)
-  console.log(isAuthorized)
+  
   return (
     <div className={styles.app}>
       
