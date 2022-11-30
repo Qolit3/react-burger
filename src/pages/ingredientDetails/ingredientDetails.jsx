@@ -27,18 +27,18 @@ export const IngredientDetails = ({id, handleClose}) => {
   const cardStyleType = !active ? `${styles.main} pt-30` : null;
   const titleStyleType = !active ? styles.title : null;
 
-  const Card = ({mainStyle = null}) => {
+  const Card = () => {
     if (!item) {
       return(
-        <div className={mainStyle}>
+        <div className={styles.card}>
           <h2 className={`${titleStyleType} text text_type_main-large mt-10`}>Загрзука</h2>
         </div>
       )
     } else {
     return (
-      <div className={mainStyle}>
+      <div className={styles.card}>
         <h2 className={`${titleStyleType} text text_type_main-large mt-10`}>Детали ингридиента</h2>
-        <img src={item.image_large} />
+        <img src={item.image_large} className={styles.image}/>
         <h3 className={`${modal.text} text_type_main-medium text mt-4`}>{item.name}</h3>
         <div className={`${modal.row} mt-8 mb-15`}>
           <DiscribeBlock text='Калории,ккал' digits={item.calories} />

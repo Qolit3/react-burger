@@ -10,3 +10,13 @@
 .title {
   text-align: center;
 }
+
+.image {
+  margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

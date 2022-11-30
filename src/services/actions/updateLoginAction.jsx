@@ -34,6 +34,7 @@ export function loginUpdate(token) {
         })
         
       } else {
+        console.log('error')
         dispatch({
           type: LOGIN_UPDATE_FAILED
         })

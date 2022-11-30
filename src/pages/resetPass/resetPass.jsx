@@ -12,19 +12,18 @@ export const ResetPass = () => {
   const [code, setCode] = useState('');
   const codeRef = useRef(null);
 
-  const { search } = useLocation();
   const navigate = useNavigate();
-  
+  const { state } = useLocation();
   useEffect(() => {
-    if(!search) {
-      console.log(1);
-      navigate({ pathname: '/forgot-password' })
-    }   
-    
-  },[])
+    if(state !== '/forgot-password') {
+      navigate('/forgot-password')
+    }    
+  }, [])
+
 
   const onResetClick = async () => {
     setLoading(true);
+    
     return await fetch(`${api}/password-reset/reset`, {
       method: 'POST',
       headers: {

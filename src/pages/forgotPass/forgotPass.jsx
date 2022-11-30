@@ -1,5 +1,5 @@
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, Navigate, useNavigate } from "react-router-dom"
 import styles from './forgotPass.module.css'
 import { useState, useRef } from 'react'
 import { api } from '../../util/constants'
@@ -24,8 +24,10 @@ export const ForgotPass = () => {
       })
     })
     .then(res => {
-      if(res && res.ok) {
-        return (res.json())
+      console.log(res)
+      
+      if(res.ok) {
+        return res.json()
       } else {
         setErrorLoad(true);
         return Promise.reject(`Ошибка: ${res.status}`)
@@ -34,7 +36,7 @@ export const ForgotPass = () => {
     .then(res => {
       if(res.success) {
         setLoading(false);
-        navigate({ pathname: '/reset-password?q=1' })
+        navigate('/reset-password', {state: '/forgot-password'})
       }
     })
     .catch(res => {

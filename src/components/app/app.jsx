@@ -22,20 +22,12 @@ import { ProfileChange } from '../profile-change/profile-change';
 
 function App() {
   const dispatch = useDispatch();
-/*  const update = () => {
-    console.log(getCookie('refreshToken'))
-    console.log(getCookie('accessToken'))
-    dispatch(loginUpdate(getCookie('refreshToken')))
-  }
-  
-  let loginUpdateInterval = setInterval(update, 5000)
-  
-*/
 
   useEffect(() => {
     dispatch(getAllIngredients());
-    dispatch(loginUpdate(getCookie('refreshToken')));
-    //return clearInterval(loginUpdateInterval);
+    if(getCookie('refreshToken')) {
+      dispatch(loginUpdate(getCookie('refreshToken')))
+    }
   }, [])
 
   const closeModal = () => {

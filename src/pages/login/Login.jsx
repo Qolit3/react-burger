@@ -1,12 +1,13 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useState } from 'react'
 import styles from './login.module.css'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useLocation, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../services/actions/loginAction';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const { request, fail } = useSelector(state => ({
     request: state.login.loginRequest,
@@ -26,7 +27,8 @@ export const LoginPage = () => {
   const onLoginClick = () => {
     dispatch(login(email, pass));
     if(!request && !fail) {
-      navigate({pathname: '/'})
+      console.log(location);
+      return <Navigate to={location.state} />
     }    
   }
 
