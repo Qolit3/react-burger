@@ -24,7 +24,8 @@ export const LoginPage = () => {
     alert('email click')
   }
 
-  const onLoginClick = () => {
+  const onLoginClick = (e) => {
+    e.preventDefault();
     dispatch(login(email, pass));
     if(!request && !fail) {
       console.log(location);
