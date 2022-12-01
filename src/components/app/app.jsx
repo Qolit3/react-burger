@@ -37,7 +37,7 @@ function App() {
     })
   }
   
-  const isAuthorized = useSelector(store => store.user.isAuthorized)
+  
   
   return (
     <div className={styles.app}>
@@ -54,13 +54,13 @@ function App() {
               }
             />
           </Route>
-          <Route element={<ProtectedRoute path='/' isAuth={!isAuthorized}/>}>
+          <Route element={<ProtectedRoute path='/' isAuth={false}/>}>
             <Route path='/login' exact={true} element={<LoginPage/>} />
             <Route path='/register' exact={true} element={<Register/>} />
             <Route path='/forgot-password' exact={true} element={<ForgotPass/>}/>
             <Route path='/reset-password' exact={true} element={<ResetPass/>}/>
           </Route>          
-          <Route element={<ProtectedRoute path='/login' isAuth={isAuthorized}/>}>
+          <Route element={<ProtectedRoute path='/login' isAuth={true}/>}>
             <Route path='/profile' exact={true} element={<Profile />}>
               <Route path='/profile' exact={true} element={<ProfileChange/>} />
               <Route path='/profile/orders' exact={true} element={<div/>} />
