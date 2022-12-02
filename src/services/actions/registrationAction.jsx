@@ -1,6 +1,6 @@
+import { authFail, authSuccess, registerFail } from "../../util/actionCreators";
 import { api } from "../../util/constants";
-import { setCookie } from "../../util/functions";
-import { FAILED_AUTHORIZATION, SUCCESSFUL_AUTHORIZATION } from "./userAction";
+import { checkResponse, setCookie } from "../../util/functions";
 
 export const REGISTRATION = 'REGISTRATION';
 export const REGISTRATION_SUCCESS = 'REGISTRATION_SUCCESS';
@@ -22,7 +22,7 @@ export function registration(name, email, pass) {
         "name": name
       })
     })
-    .then(res => res.json())
+    .then(checkResponse)
     .then(res => {
       if (res && res.success) {
         
@@ -35,24 +35,17 @@ export function registration(name, email, pass) {
           email: res.user.email,
           name: res.user.name
         })
-        dispatch({
-          type: SUCCESSFUL_AUTHORIZATION
-        })
+        dispatch(authSuccess())
         console.log(1)
       } else {
-        dispatch({
-          type: REGISTRATION_FAILED
-        })
-        dispatch({
-          type: FAILED_AUTHORIZATION
-        })
+        dispatch(registerFail())
+        dispatch(authFail())
         console.log(res)
       }
     })
     .catch(res => {
-      dispatch({
-        type: REGISTRATION_FAILED
-      })
+      dispatch(registerFail());
+      dispatch(authFail());
       console.log(res)
     })
   }

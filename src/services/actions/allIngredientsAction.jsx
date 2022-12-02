@@ -1,4 +1,6 @@
+import { getAllIngFail } from "../../util/actionCreators";
 import { api } from "../../util/constants";
+import { checkResponse } from "../../util/functions";
 
 export const GET_ALL_INGREDIENTS = 'GET_ALL_INGREDIENTS';
 export const GET_ALL_INGREDIENTS_SUCCESS = 'GET_ALL_INGREDIENTS_SUCCESS';
@@ -10,7 +12,7 @@ export function getAllIngredients() {
       type: GET_ALL_INGREDIENTS
     })
     fetch(`${api}/ingredients`)
-    .then(res => res.json())
+    .then(checkResponse)
     .then(res => {
       if (res && res.success) {
         dispatch({
@@ -18,15 +20,11 @@ export function getAllIngredients() {
           allIngredients: res.data
         })
       } else {
-        dispatch({
-          type: GET_ALL_INGREDIENTS_FAILED
-        })
+        dispatch(getAllIngFail())
       }
     })
     .catch(res => {
-      dispatch({
-        type: GET_ALL_INGREDIENTS_FAILED
-      })
+      dispatch(getAllIngFail())
       console.log(res)
     })
   }

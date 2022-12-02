@@ -1,6 +1,6 @@
+import { authFail, authSuccess, loginUpdateFail } from "../../util/actionCreators";
 import { api } from "../../util/constants";
-import { setCookie } from "../../util/functions";
-import { FAILED_AUTHORIZATION, SUCCESSFUL_AUTHORIZATION } from "./userAction";
+import { checkResponse, setCookie } from "../../util/functions";
 
 export const LOGIN_UPDATE = 'LOGIN_UPDATE';
 export const LOGIN_UPDATE_SUCCESS = 'LOGIN_UPDATE_SUCCESS';
@@ -20,7 +20,7 @@ export function loginUpdate(token) {
         "token": token
       })
     })
-    .then(res => res.json())
+    .then(checkResponse)
     .then(res => {
       if (res && res.success) {
         setCookie('refreshToken', res.refreshToken);
@@ -29,26 +29,17 @@ export function loginUpdate(token) {
         dispatch({
           type: LOGIN_UPDATE_SUCCESS
         })
-        dispatch({
-          type: SUCCESSFUL_AUTHORIZATION
-        })
+        dispatch(authSuccess())
         
       } else {
-        console.log('error')
-        dispatch({
-          type: LOGIN_UPDATE_FAILED
-        })
-        dispatch({
-          type: FAILED_AUTHORIZATION
-        })
-        
+        dispatch(loginUpdateFail());
+        dispatch(authFail());        
         console.log(res)
       }
     })
     .catch(res => {
-      dispatch({
-        type: LOGIN_UPDATE_FAILED
-      })
+      dispatch(loginUpdateFail());
+      dispatch(authFail());
       console.log(res)
     })
   }

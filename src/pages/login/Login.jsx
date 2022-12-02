@@ -1,12 +1,11 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import React, { useState } from 'react'
 import styles from './login.module.css'
-import { useNavigate, Link, useLocation, Navigate } from 'react-router-dom'
+import { Link, useLocation, Navigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../../services/actions/loginAction';
 
 export const LoginPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
   const { request, fail } = useSelector(state => ({

@@ -1,5 +1,6 @@
+import { getOrderFail } from "../../util/actionCreators";
 import { accessToken, api } from "../../util/constants";
-import { getCookie } from "../../util/functions";
+import { checkResponse } from "../../util/functions";
 
 export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -22,7 +23,7 @@ export function getOrder(ingredientsId) {
         'ingredients': ingredientsId
       })
     })
-    .then(res => res.json())
+    .then(checkResponse)
     .then(res => {
       if (res && res.success) {
         dispatch({
@@ -30,15 +31,11 @@ export function getOrder(ingredientsId) {
           order: res
         })
       } else {
-        dispatch({
-          type: GET_ORDER_FAILED
-        })
+        dispatch(getOrderFail())
       }
     })
     .catch(res => {
-      dispatch({
-        type: GET_ORDER_FAILED
-      })
+      dispatch(getOrderFail())
       console.log(res)
     })
   }
