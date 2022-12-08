@@ -1,12 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from 'react'
-import { useParams } from "react-router-dom"
+import { useNavigate, useParams } from "react-router-dom"
 import Modal from "../../components/modal/modal";
 import modal from '../../components/modal/modal.module.css'
 import styles from './ingredientDetails.module.css'
+import { REMOVE_MODAL_INGREDIENT } from "../../services/actions/modalActions";
 
 
-export const IngredientDetails = ({id, handleClose}) => {
+export const IngredientDetails = ({id}) => {
   const params = useParams();
   const ingredients = useSelector(store => store.allIngredients.ingredients);
   const active = useSelector(state => state.modal.modalStatus)
@@ -15,15 +16,7 @@ export const IngredientDetails = ({id, handleClose}) => {
   useEffect(() => {
     setItem(ingredients.find((item) => params.id === item._id));
   }, [ingredients, params])
-
-  const DiscribeBlock = ({text, digits}) =>{
-    return (
-      <div>
-        <p className={`${modal.text} text_type_main-default text text_color_inactive`}>{text}</p>
-        <p className={`${modal.text} text_type_digits-default text text_color_inactive`}>{digits}</p>
-      </div>
-    )
-  }
+  
   const cardStyleType = !active ? `${styles.main} pt-30` : null;
   const titleStyleType = !active ? styles.title : null;
 
@@ -52,7 +45,7 @@ export const IngredientDetails = ({id, handleClose}) => {
 
   const ModalIngredient = () => {
     return (
-      <Modal id={id} active={active} handleClose={handleClose}>
+      <Modal id={id} active={active} handleClose={closeModal}>
         <Card mainStyle='mr-15 ml-15' />
       </Modal>
     )

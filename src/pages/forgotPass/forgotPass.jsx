@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom"
 import styles from './forgotPass.module.css'
 import { useState, useRef } from 'react'
 import { api } from '../../util/constants'
+import { checkResponse } from "../../util/functions"
 
 
 export const ForgotPass = () => {
@@ -23,16 +24,7 @@ export const ForgotPass = () => {
         "email": email
       })
     })
-    .then(res => {
-      console.log(res)
-      
-      if(res.ok) {
-        return res.json()
-      } else {
-        setErrorLoad(true);
-        return Promise.reject(`Ошибка: ${res.status}`)
-      }
-    })
+    .then(checkResponse)
     .then(res => {
       if(res.success) {
         setLoading(false);

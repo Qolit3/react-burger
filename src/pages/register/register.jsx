@@ -4,6 +4,7 @@ import styles from '../login/login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { registration } from '../../services/actions/registrationAction';
+import { useForm } from '../../hooks/useForm';
 
 
 export const Register = () => {
@@ -14,15 +15,18 @@ export const Register = () => {
     fail: state.registration.registrationFailed
   }))
 
-  const [name, setName] = useState('');
   const nameRef = React.useRef(null);
-  const [email, setEmail] = useState('');
   const emailRef = React.useRef(null);
-  const [pass, setPass] = useState('');
   const passRef = React.useRef(null);
 
+  const {values, handleChange, setValues} = useForm({
+    nameInput: '',
+    passInput: '',
+    emailInput: ''
+  })
+
   const onRegisterClick =  () => {
-    dispatch(registration(name, email, pass));
+    dispatch(registration(values.nameInput, values.emailInput, values.passInput));
     if(!request && !fail) {
       navigate({ pathname: '/' })
     }    
@@ -41,9 +45,9 @@ export const Register = () => {
             <Input
               type={'text'}
               placeholder={'Имя'}
-              onChange={e => setName(e.target.value)}
+              onChange={e => handleChange(e)}
               icon={undefined}
-              value={name}
+              value={values.nameInput}
               name={'nameInput'}
               error={false}
               ref={nameRef}
@@ -55,9 +59,9 @@ export const Register = () => {
             <Input 
               type='email'
               placeholder='E-mail'
-              onChange={e => setEmail(e.target.value)}
+              onChange={e => handleChange(e)}
               icon={undefined}
-              value={email}
+              value={values.emailInput}
               name={'emailInput'}
               error={false}
               ref={emailRef}
@@ -69,9 +73,9 @@ export const Register = () => {
             <Input
               type='password'
               placeholder='Password'
-              onChange={e => setPass(e.target.value)}
+              onChange={e => handleChange(e)}
               icon={'HideIcon'}
-              value={pass}
+              value={values.passInput}
               name={'passInput'}
               error={false}
               ref={passRef}

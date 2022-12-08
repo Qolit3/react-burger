@@ -1,6 +1,8 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect, useRef } from 'react';
+import { useForm } from '../../hooks/useForm';
 import { accessToken, api } from "../../util/constants";
+import { checkResponse } from '../../util/functions';
 import styles from './profile-change.module.css'
 
 
@@ -14,12 +16,15 @@ export const ProfileChange = () => {
         'authorization': `Bearer ${accessToken}`
       }
     })
-    .then(res => res.json())
+    .then(checkResponse)
     .then(res => {
       if(res.success) {
-        setName(res.user.name);
+        setValues({
+          ...values,
+          name: res.user.name,
+          email: res.user.email
+        })
         setEditedName(res.user.name);
-        setEmail(res.user.email);
         setEditedEmail(res.user.email);
         setIsPatched(false);
       } else {
@@ -33,11 +38,11 @@ export const ProfileChange = () => {
 
   const patchUser = async () => {
     let updateBody = {
-      'name': name,
-      'email': email
+      'name': values.name,
+      'email': values.email
     };
-    if(pass) {
-      updateBody.password = pass
+    if(values.pass) {
+      updateBody.password = values.pass
     }    
     await fetch(`${api}/auth/user`, {
       method: 'PATCH', 
@@ -62,9 +67,11 @@ export const ProfileChange = () => {
     .catch(res => console.log(`Ошибка: ${res}`));
   }
 
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [pass, setPass] = useState('');
+  const {values, handleChange, setValues} = useForm({
+    name: '',
+    email: '',
+    pass: ''
+  })
 
   const passRef = useRef(null);
   const nameRef = useRef(null);
@@ -78,7 +85,7 @@ export const ProfileChange = () => {
   const [editedEmail, setEditedEmail] = useState();
 
   const [needSafe, setNeedSafe] = useState(false)
-  const result = ((editedName === name) && (editedEmail === email) && (pass === ''))
+  const result = ((editedName === values.name) && (editedEmail === values.email) && (values.pass === ''))
   useEffect(() => {
     setNeedSafe(!result);
   }, [result])
@@ -99,9 +106,9 @@ export const ProfileChange = () => {
         <Input
           type="text"
           placeholder="Имя"
-          onChange={e => setName(e.target.value)}
+          onChange={e => handleChange(e)}
           icon='EditIcon'
-          value={name}
+          value={values.name}
           disabled={nameEdit}
           error={false}
           ref={nameRef}
@@ -113,10 +120,10 @@ export const ProfileChange = () => {
           <Input
             type="email"
             placeholder="E-mail"
-            onChange={e => setEmail(e.target.value)}
+            onChange={e => handleChange(e)}
             icon='EditIcon'
             disabled={emailEdit}
-            value={email}
+            value={values.email}
             error={false}
             ref={emailRef}
             errorText='Error'
@@ -127,10 +134,10 @@ export const ProfileChange = () => {
         <Input
           type="password"
           placeholder="Пароль"
-          onChange={e => setPass(e.target.value)}
+          onChange={e => handleChange(e)}
           icon='EditIcon'
           disabled={passEdit}
-          value={pass}
+          value={values.pass}
           error={false}
           ref={passRef}
           errorText='Error'

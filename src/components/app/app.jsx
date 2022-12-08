@@ -1,13 +1,9 @@
 import { useEffect} from 'react';
 import Header from '../header/header';
 import styles from './app.module.css'
-import modal from '../modal/modal.module.css'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { getAllIngredients } from '../../services/actions/allIngredientsAction';
-import Modal from '../modal/modal';
-import { REMOVE_MODAL_INGREDIENT } from '../../services/actions/modalActions';
-import { BrowserRouter as Router, Navigate, Route, Routes, useNavigate
- } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { LoginPage } from '../../pages/login/Login.jsx'
 import { Register } from '../../pages/register/register';
 import { Constructor } from '../../pages/constructor/constructor';
@@ -17,57 +13,50 @@ import { getCookie } from '../../util/functions';
 import { Profile } from '../../pages/profile/Profile';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { ResetPass } from '../../pages/resetPass/resetPass';
-import { IngredientDetails } from '../../pages/ingredientDetails/ingredientDetails';
 import { ProfileChange } from '../profile-change/profile-change';
+import { ModalView } from '../modal-view/modal-view';
+import { PageView } from '../page-view/page-view';
 
 function App() {
   const dispatch = useDispatch();
+  let location = useLocation();
 
   useEffect(() => {
     dispatch(getAllIngredients());
     if(getCookie('refreshToken')) {
       dispatch(loginUpdate(getCookie('refreshToken')))
     }
-  }, [])
-
-  const closeModal = () => {
-    window.history.back();
-    dispatch({
-      type: REMOVE_MODAL_INGREDIENT
-    })
-  }
+  }, []) 
   
   
+  const background = location.state?.background
   
+  console.log(location);
+  console.log(background);
   return (
-    <div className={styles.app}>
-      
-      <Router>
+    <div className={styles.app}>      
       <Header />
-        <Routes>
-          <Route path='/' exact={true} element={<Constructor />}>
-            <Route path='/ingredients/:id' exact={true} element={
-                <IngredientDetails
-                  id={1}
-                  handleClose={closeModal}
-                />
-              }
-            />
-          </Route>
+        <Routes location={background || location}>
+          <Route path='/'  element={<Constructor />} />
+          <Route path='/ingredients/:id'  element={<PageView />} />
           <Route element={<ProtectedRoute path='/' isAuth={false}/>}>
-            <Route path='/login' exact={true} element={<LoginPage/>} />
-            <Route path='/register' exact={true} element={<Register/>} />
-            <Route path='/forgot-password' exact={true} element={<ForgotPass/>}/>
-            <Route path='/reset-password' exact={true} element={<ResetPass/>}/>
+            <Route path='/login'  element={<LoginPage/>} />
+            <Route path='/register'  element={<Register/>} />
+            <Route path='/forgot-password'  element={<ForgotPass/>}/>
+            <Route path='/reset-password'  element={<ResetPass/>}/>
           </Route>          
           <Route element={<ProtectedRoute path='/login' isAuth={true}/>}>
-            <Route path='/profile' exact={true} element={<Profile />}>
-              <Route path='/profile' exact={true} element={<ProfileChange/>} />
-              <Route path='/profile/orders' exact={true} element={<div/>} />
+            <Route path='/profile'  element={<Profile />}>
+              <Route path='/profile'  element={<ProfileChange/>} />
+              <Route path='/profile/orders'  element={<div/>} />
             </Route>
           </Route>
         </Routes>
-      </Router>
+        {background && (
+          <Routes>
+            <Route path='/ingredients/:id'  element={<ModalView id={1} />}/>
+          </Routes>
+        )}
     </div>
   );
 }

@@ -7,24 +7,22 @@ import PropTypes from 'prop-types';
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../util/types";
 import { SET_MODAL_INGREDIENT } from "../../services/actions/modalActions";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { v4 as uuidv4 } from 'uuid';
 
 
 const Ingredient = (props) => {
-  const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
 
   const openModal = () => {
-    
     navigate(`/ingredients/${props.item._id}`);
-    dispatch({
-      type: SET_MODAL_INGREDIENT
-    })
   }
-
+  const item = props.item;
+  item.key = uuidv4();
   const [, dragRef] = useDrag({
     type: 'ingredient',
-    item: props.item
+    item: item
   })
 
   const burgerIngredients = useSelector(state => state.burgerIng.burgerIngredients)
@@ -38,15 +36,21 @@ const Ingredient = (props) => {
   
   return (
     <li ref={dragRef}>
-      <div className={styles.ingredient}  onClick={openModal}>
-      <img src={props.item.image} className='ml-4'/>
-      <div className={`${styles.currency} mt-1`}>
-        <p className={`${styles.digits} text text_type_digits-default`}>{props.item.price}</p>
-        <CurrencyIcon type="primary" />
-      </div>
-      <p className={`${styles.name} text text_type_main-default mt-1`}>{props.item.name}</p>
-      {renderCounter()}
-      </div>
+      
+        <div className={styles.ingredient}>
+          <Link to={`/ingredients/${props.item._id}`} state={{
+            background: location
+          }}>
+            <img src={props.item.image} className='ml-4'/>
+          </Link>
+          <div className={`${styles.currency} mt-1`}>
+            <p className={`${styles.digits} text text_type_digits-default`}>{props.item.price}</p>
+            <CurrencyIcon type="primary" />
+          </div>
+          <p className={`${styles.name} text text_type_main-default mt-1`}>{props.item.name}</p>
+          {renderCounter()}
+        </div>
+      
     </li>
   )
 }

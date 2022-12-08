@@ -3,14 +3,20 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom"
 import styles from './resetPass.module.css'
 import { useState, useRef, useEffect } from 'react'
 import { api } from '../../util/constants'
+import { useForm } from "../../hooks/useForm"
+import { checkResponse } from "../../util/functions"
 
 export const ResetPass = () => {
   const [loading, setLoading] = useState(false);
   const [errorLoad, setErrorLoad] = useState(false);
-  const [pass, setPass] = useState('');
+  
   const passRef = useRef(null);
-  const [code, setCode] = useState('');
   const codeRef = useRef(null);
+
+  const {values, handleChange, setValues} = useForm({
+    pass: '',
+    code: ''
+  })
 
   const navigate = useNavigate();
   const { state } = useLocation();
@@ -30,18 +36,11 @@ export const ResetPass = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "password": pass,
-        "token": code
+        "password": values.pass,
+        "token": values.code
       })
     })
-    .then(res => {
-      if(res && res.ok) {
-        return (res.json())
-      } else {
-        setErrorLoad(true);
-        return Promise.reject(`Ошибка: ${res.status}`)
-      }
-    })
+    .then(checkResponse)
     .then(res => {
       if(res.success) {
         setLoading(false);
@@ -68,10 +67,10 @@ export const ResetPass = () => {
             <Input
               type={'password'}
               placeholder={'Введите новый пароль'}
-              onChange={e => setPass(e.target.value)}
+              onChange={e => handleChange(e)}
               icon={'ShowIcon'}
-              value={pass}
-              name={'passInput'}
+              value={values.pass}
+              name={'pass'}
               error={false}
               ref={passRef}
               errorText={'Ошибка'}
@@ -82,10 +81,10 @@ export const ResetPass = () => {
             <Input
               type={'text'}
               placeholder={'Введите код из письма'}
-              onChange={e => setCode(e.target.value)}
+              onChange={e => handleChange(e)}
               icon={undefined}
-              value={code}
-              name={'codeInput'}
+              value={values.code}
+              name={'code'}
               error={false}
               ref={codeRef}
               errorText={'Ошибка'}

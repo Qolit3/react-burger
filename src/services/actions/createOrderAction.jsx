@@ -1,6 +1,6 @@
 import { getOrderFail } from "../../util/actionCreators";
 import { accessToken, api } from "../../util/constants";
-import { checkResponse } from "../../util/functions";
+import { checkResponse, getCookie } from "../../util/functions";
 
 export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -16,7 +16,7 @@ export function getOrder(ingredientsId) {
     fetch(`${api}/orders`, {
       method: 'POST',
       headers: {
-        'authorization': `Bearer ${accessToken}`,
+        'authorization': `Bearer ${getCookie('accessToken')}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({

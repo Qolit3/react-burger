@@ -1,5 +1,4 @@
 import { ConstructorItem } from "../constructor-item/constructor-item";
-import { v4 as uuidv4} from 'uuid';
 
 export const RenderIngerdients = ({list}) => {
   const renderIngerdients = () => {
@@ -8,17 +7,17 @@ export const RenderIngerdients = ({list}) => {
     const bun = list.find(item => item.type === 'bun');    
   
     for(let i = 1; i < list.length; i++) {
-      
+      const item = list.find(item => item.order === i);
       renderList.push(
-        <ConstructorItem key={uuidv4()} ingredient={list.find(item => item.order === i)}/>
+        <ConstructorItem key={item.key} ingredient={item}/>
       )
     }
     
     renderList.push(
-      <ConstructorItem key={uuidv4()} ingredient={bun} position={'bottom'}/>
+      <ConstructorItem key={bun.key} ingredient={bun} position={'bottom'}/>
     )
     renderList.unshift(
-      <ConstructorItem key={uuidv4()} ingredient={bun} position={'top'}/>
+      <ConstructorItem key={bun.key+1} ingredient={bun} position={'top'}/>
     )
     
     return renderList;
