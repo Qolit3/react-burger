@@ -1,16 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-import { v4 as uuidv4} from 'uuid';
 
 import styles from '../burger-constructor/burger-constructor.module.css'
 import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/burgerIngActions';
 
 
-export const ConstructorItem = ({ingredient, position}) => {
+export const ConstructorItem = ({ingredient, position, key}) => {
   const list = useSelector(state => state.burgerIng.burgerIngredients)
   const dispatch = useDispatch();
-  
+  /*
+
+  Прошу прощения, упорно смотерл в другой компонент
+
+  */
 
   const [, dragRef] = useDrag({
     type: 'constructor',
@@ -55,20 +58,20 @@ export const ConstructorItem = ({ingredient, position}) => {
   if(ingredient.type === 'bun') {
     if(position === 'top') {
       return (
-        <div  key={uuidv4()}  className={`${styles.ingredient}`}>
+        <div  key={key}  className={`${styles.ingredient}`}>
           <ConstructorElement type="top" text={`${ingredient.name} (верх)`} thumbnail={ingredient.image} price={ingredient.price} isLocked={true}/>
         </div>
       )
     } else {
       return (
-        <div  key={uuidv4()}  className={`${styles.ingredient} mt-4`}>
+        <div  key={key}  className={`${styles.ingredient} mt-4`}>
           <ConstructorElement type="bottom" text={`${ingredient.name} (низ)`} thumbnail={ingredient.image} price={ingredient.price} isLocked={true}/>
         </div>
       )
     }
   } else {
     return (
-      <div ref={dropTarget}  key={uuidv4()} >
+      <div ref={dropTarget}  key={key} >
         <div ref={dragRef} className={`${styles.ingredient} mt-4 ${isHover && styles.ingredient_hovered}`}>
         <DragIcon type="primary"/>
         <ConstructorElement text={ingredient.name} thumbnail={ingredient.image} price={ingredient.price} handleClose={() => {
