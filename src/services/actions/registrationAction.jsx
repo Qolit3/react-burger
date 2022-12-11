@@ -1,4 +1,4 @@
-import { authFail, authSuccess, registerFail } from "../../util/actionCreators";
+import { authFail, authSuccess, registerFail } from "./actionCreators";
 import { api } from "../../util/constants";
 import { checkResponse, setCookie } from "../../util/functions";
 

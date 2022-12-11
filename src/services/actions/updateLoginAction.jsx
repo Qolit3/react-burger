@@ -1,6 +1,7 @@
-import { authFail, authSuccess, loginUpdateFail } from "../../util/actionCreators";
+
 import { api } from "../../util/constants";
 import { checkResponse, setCookie } from "../../util/functions";
+import { authFail, authSuccess, loginUpdateFail } from "./actionCreators";
 
 export const LOGIN_UPDATE = 'LOGIN_UPDATE';
 export const LOGIN_UPDATE_SUCCESS = 'LOGIN_UPDATE_SUCCESS';

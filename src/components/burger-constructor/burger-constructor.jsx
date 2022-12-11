@@ -38,12 +38,12 @@ const BurgerConstructor = () => {
       order: 3},
     ];
   }*/
-  useEffect(() => {
+  /*useEffect(() => {
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
         ingredients: currentIngredients
       })
-  }, [allIngredients])
+  }, [allIngredients])*/
 
   const closeModal = () => {
     dispatch({

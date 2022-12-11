@@ -1,6 +1,7 @@
-import { getOrderFail } from "../../util/actionCreators";
-import { accessToken, api } from "../../util/constants";
+
+import { api } from "../../util/constants";
 import { checkResponse, getCookie } from "../../util/functions";
+import { getOrderFail } from "./actionCreators";
 
 export const GET_ORDER = 'GET_ORDER';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';

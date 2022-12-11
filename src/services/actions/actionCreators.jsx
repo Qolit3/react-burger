@@ -1,9 +1,9 @@
-import { GET_ALL_INGREDIENTS_FAILED } from "../services/actions/allIngredientsAction";
-import { GET_ORDER_FAILED } from "../services/actions/createOrderAction";
-import { LOGIN_FAILED } from "../services/actions/loginAction";
-import { REGISTRATION_FAILED } from "../services/actions/registrationAction";
-import { LOGIN_UPDATE_FAILED } from "../services/actions/updateLoginAction";
-import { FAILED_AUTHORIZATION, SUCCESSFUL_AUTHORIZATION } from "../services/actions/userAction";
+import { GET_ALL_INGREDIENTS_FAILED } from "./allIngredientsAction"
+import { GET_ORDER_FAILED } from "./createOrderAction"
+import { LOGIN_FAILED } from "./loginAction"
+import { REGISTRATION_FAILED } from "./registrationAction"
+import { LOGIN_UPDATE_FAILED } from "./updateLoginAction"
+import { FAILED_AUTHORIZATION, SUCCESSFUL_AUTHORIZATION } from "./userAction"
 
 export function getAllIngFail () {
   return { type: GET_ALL_INGREDIENTS_FAILED }

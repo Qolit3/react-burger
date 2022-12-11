@@ -1,6 +1,6 @@
-import { getAllIngFail } from "../../util/actionCreators";
 import { api } from "../../util/constants";
 import { checkResponse } from "../../util/functions";
+import { getAllIngFail } from "./actionCreators";
 
 export const GET_ALL_INGREDIENTS = 'GET_ALL_INGREDIENTS';
 export const GET_ALL_INGREDIENTS_SUCCESS = 'GET_ALL_INGREDIENTS_SUCCESS';

@@ -1,28 +1,27 @@
-import React from "react";
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { useDrag } from "react-dnd/dist/hooks";
 import styles from './ingredient.module.css'
 import PropTypes from 'prop-types';
 
 import { CurrencyIcon, Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import ingredientType from "../../util/types";
-import { SET_MODAL_INGREDIENT } from "../../services/actions/modalActions";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { v4 as uuidv4 } from 'uuid';
 
 
-const Ingredient = (props) => {
+export const Ingredient = (props) => {
   const location = useLocation();
-  const navigate = useNavigate();
 
-  const openModal = () => {
-    navigate(`/ingredients/${props.item._id}`);
-  }
-  const item = props.item;
-  item.key = uuidv4();
+  
+  
+  
   const [, dragRef] = useDrag({
     type: 'ingredient',
-    item: item
+    item: () => {
+      const item = props.item;
+      item.key = uuidv4();
+      return item
+    }
   })
 
   const burgerIngredients = useSelector(state => state.burgerIng.burgerIngredients)
