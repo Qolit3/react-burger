@@ -6,7 +6,7 @@ import styles from '../burger-constructor/burger-constructor.module.css'
 import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/burgerIngActions';
 
 
-export const ConstructorItem = ({ingredient, position, key}) => {
+export const ConstructorItem = ({ingredient, position}) => {
   const list = useSelector(state => state.burgerIng.burgerIngredients)
   const dispatch = useDispatch();
   /*
@@ -58,20 +58,20 @@ export const ConstructorItem = ({ingredient, position, key}) => {
   if(ingredient.type === 'bun') {
     if(position === 'top') {
       return (
-        <div  key={key}  className={`${styles.ingredient}`}>
+        <div className={`${styles.ingredient}`}>
           <ConstructorElement type="top" text={`${ingredient.name} (верх)`} thumbnail={ingredient.image} price={ingredient.price} isLocked={true}/>
         </div>
       )
     } else {
       return (
-        <div  key={key}  className={`${styles.ingredient} mt-4`}>
+        <div className={`${styles.ingredient} mt-4`}>
           <ConstructorElement type="bottom" text={`${ingredient.name} (низ)`} thumbnail={ingredient.image} price={ingredient.price} isLocked={true}/>
         </div>
       )
     }
   } else {
     return (
-      <div ref={dropTarget}  key={key} >
+      <div ref={dropTarget}>
         <div ref={dragRef} className={`${styles.ingredient} mt-4 ${isHover && styles.ingredient_hovered}`}>
         <DragIcon type="primary"/>
         <ConstructorElement text={ingredient.name} thumbnail={ingredient.image} price={ingredient.price} handleClose={() => {
