@@ -109,7 +109,7 @@ const BurgerConstructor = () => {
           <p className={`${styles.price} text text_type_digits-default`}>{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" htmlType="button" size="medium" onClick={openModal}>Оформить заказ</Button>
+        <Button type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
       <Modal id={2} active={activeOrder} handleClose={closeModal}>
         <OrderDetails />

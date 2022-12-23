@@ -11,6 +11,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 export const Ingredient = (props) => {
   const location = useLocation();
+
+  
+  
   
   const [, dragRef] = useDrag({
     type: 'ingredient',

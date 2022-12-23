@@ -3,7 +3,7 @@ import Header from '../header/header';
 import styles from './app.module.css'
 import { useDispatch } from 'react-redux';
 import { getAllIngredients } from '../../services/actions/allIngredientsAction';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { LoginPage } from '../../pages/login/Login.jsx'
 import { Register } from '../../pages/register/register';
 import { Constructor } from '../../pages/constructor/constructor';
@@ -16,10 +16,6 @@ import { ResetPass } from '../../pages/resetPass/resetPass';
 import { ProfileChange } from '../profile-change/profile-change';
 import { ModalView } from '../modal-view/modal-view';
 import { PageView } from '../page-view/page-view';
-import { Feed } from '../../pages/feed/feed';
-import { OrderPage } from '../../pages/orderPage/orderPage';
-import { ProfileOrders } from '../../pages/profileOrders/profileOrders';
-import { FEED_CONNECT, FEED_DISCONNECT } from '../../services/actions/feedActions';
 
 function App() {
   const dispatch = useDispatch();
@@ -30,23 +26,19 @@ function App() {
     if(getCookie('refreshToken')) {
       dispatch(loginUpdate(getCookie('refreshToken')))
     }
-  }, [])
+  }, []) 
   
-  useEffect(() => {
-    dispatch({type: FEED_CONNECT})
-    return () => dispatch({type: FEED_DISCONNECT})
-  }, [])
   
   const background = location.state?.background
   
+  console.log(location);
+  console.log(background);
   return (
     <div className={styles.app}>      
       <Header />
         <Routes location={background || location}>
           <Route path='/'  element={<Constructor />} />
           <Route path='/ingredients/:id'  element={<PageView />} />
-          <Route path='/feed' element={<Feed />} />
-          <Route path='/feed/:id' element={<OrderPage /> } />
           <Route element={<ProtectedRoute path='/' isAuth={false}/>}>
             <Route path='/login'  element={<LoginPage/>} />
             <Route path='/register'  element={<Register/>} />
@@ -56,16 +48,13 @@ function App() {
           <Route element={<ProtectedRoute path='/login' isAuth={true}/>}>
             <Route path='/profile'  element={<Profile />}>
               <Route path='/profile'  element={<ProfileChange/>} />
-              <Route path='/profile/orders'  element={<ProfileOrders/>} />
+              <Route path='/profile/orders'  element={<div/>} />
             </Route>
-            <Route path='/profile/orders/:id' element={<OrderPage place={true} />} />
           </Route>
         </Routes>
         {background && (
           <Routes>
             <Route path='/ingredients/:id'  element={<ModalView id={1} />}/>
-            <Route path='/profile/orders/:id' element={<OrderPage modal={true} place={true} />} />
-            <Route path='/feed/:id' element={<OrderPage modal={true} />} />
           </Routes>
         )}
     </div>
