@@ -20,6 +20,7 @@ import { Feed } from '../../pages/feed/feed';
 import { OrderPage } from '../../pages/orderPage/orderPage';
 import { ProfileOrders } from '../../pages/profileOrders/profileOrders';
 import { FEED_CONNECT, FEED_DISCONNECT } from '../../services/actions/feedActions';
+import { ORDERS_CONNECT, ORDERS_DISCONNECT } from '../../services/actions/ordersActions';
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +35,11 @@ function App() {
   
   useEffect(() => {
     dispatch({type: FEED_CONNECT})
-    return () => dispatch({type: FEED_DISCONNECT})
+    dispatch({ type: ORDERS_CONNECT })
+    return () => {
+      dispatch({type: FEED_DISCONNECT})
+      dispatch({type: ORDERS_DISCONNECT})
+    }
   }, [])
   
   const background = location.state?.background
@@ -64,8 +69,10 @@ function App() {
         {background && (
           <Routes>
             <Route path='/ingredients/:id'  element={<ModalView id={1} />}/>
-            <Route path='/profile/orders/:id' element={<OrderPage modal={true} place={true} />} />
             <Route path='/feed/:id' element={<OrderPage modal={true} />} />
+            <Route element={<ProtectedRoute path='/login' isAuth={true}/>}>
+              <Route path='/profile/orders/:id' element={<OrderPage modal={true} place={true} />} />
+            </Route>
           </Routes>
         )}
     </div>
