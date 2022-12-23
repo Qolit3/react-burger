@@ -3,7 +3,7 @@ import Header from '../header/header';
 import styles from './app.module.css'
 import { useDispatch } from 'react-redux';
 import { getAllIngredients } from '../../services/actions/allIngredientsAction';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { LoginPage } from '../../pages/login/Login.jsx'
 import { Register } from '../../pages/register/register';
 import { Constructor } from '../../pages/constructor/constructor';
@@ -22,6 +22,7 @@ import { ProfileOrders } from '../../pages/profileOrders/profileOrders';
 import { FEED_CONNECT, FEED_DISCONNECT } from '../../services/actions/feedActions';
 import { ORDERS_CONNECT, ORDERS_DISCONNECT } from '../../services/actions/ordersActions';
 
+
 function App() {
   const dispatch = useDispatch();
   let location = useLocation();
@@ -31,8 +32,9 @@ function App() {
     if(getCookie('refreshToken')) {
       dispatch(loginUpdate(getCookie('refreshToken')))
     }
-  }, [])
+  }, []) 
   
+
   useEffect(() => {
     dispatch({type: FEED_CONNECT})
     dispatch({ type: ORDERS_CONNECT })
@@ -44,14 +46,14 @@ function App() {
   
   const background = location.state?.background
   
+  console.log(location);
+  console.log(background);
   return (
     <div className={styles.app}>      
       <Header />
         <Routes location={background || location}>
           <Route path='/'  element={<Constructor />} />
           <Route path='/ingredients/:id'  element={<PageView />} />
-          <Route path='/feed' element={<Feed />} />
-          <Route path='/feed/:id' element={<OrderPage /> } />
           <Route element={<ProtectedRoute path='/' isAuth={false}/>}>
             <Route path='/login'  element={<LoginPage/>} />
             <Route path='/register'  element={<Register/>} />
@@ -61,9 +63,8 @@ function App() {
           <Route element={<ProtectedRoute path='/login' isAuth={true}/>}>
             <Route path='/profile'  element={<Profile />}>
               <Route path='/profile'  element={<ProfileChange/>} />
-              <Route path='/profile/orders'  element={<ProfileOrders/>} />
+              <Route path='/profile/orders'  element={<div/>} />
             </Route>
-            <Route path='/profile/orders/:id' element={<OrderPage place={true} />} />
           </Route>
         </Routes>
         {background && (

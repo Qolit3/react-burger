@@ -8,8 +8,6 @@ import { registrationReducer } from "./registrationReducer";
 import { loginReducer } from "./loginReducer";
 import { loginUpdateReducer } from "./loginUpdateReducer";
 import { userReducer } from "./userReducer";
-import { feedReducer } from "./feedReducer";
-import { ordersReducer } from "./ordersReducer";
 
 export const rootReducer = combineReducers({
   allIngredients,
@@ -20,7 +18,5 @@ export const rootReducer = combineReducers({
   registration: registrationReducer,
   login: loginReducer,
   loginUpdate: loginUpdateReducer,
-  user: userReducer,
-  ordersFeed: feedReducer,
-  profileOrders: ordersReducer
+  user: userReducer
 })
