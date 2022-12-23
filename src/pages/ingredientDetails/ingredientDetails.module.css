@@ -1,0 +1,22 @@
+.main {
+  position: absolute;
+  z-index: 1;
+  width: 1240px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #131316;
+}
+
+.title {
+  text-align: center;
+}
+
+.image {
+  margin: 0 auto;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

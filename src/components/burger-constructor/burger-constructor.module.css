@@ -1,0 +1,37 @@
+.constructor {
+  width: 568px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+}
+
+.ingredient {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;  
+}
+
+.ingredient_hovered{
+  box-shadow: 0 0 3px white;
+}
+
+.ingredient:first-of-type,
+.ingredient:last-of-type {
+  justify-content: end;
+}
+
+.result {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+}
+
+.currency {
+  display: flex;
+}
+
+.price {
+  margin-right: 9.5px;
+}

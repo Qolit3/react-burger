@@ -1,0 +1,41 @@
+.main {
+  margin: 120px auto ;
+  position: relative;
+  width: 320px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.side_bar {
+  position: absolute;
+  top: 0;
+  left: -380px;
+  display: flex;
+  flex-direction: column;
+}
+
+.button {
+  text-decoration: none;
+  color: #8585ad;
+}
+
+.button_active {
+  color: #f2f2f3
+}
+
+.button_exit {
+  border: none;
+  background: none;
+  text-align: left;
+}
+
+.button_exit:hover {
+  cursor: pointer;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

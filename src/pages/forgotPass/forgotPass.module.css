@@ -1,0 +1,19 @@
+.main {
+  margin: 180px auto;
+  width: 480px;
+}
+
+.text {
+  width: 480px;
+  text-align: center;
+}
+
+.center_box {
+  display: flex;
+  justify-content: center;
+}
+
+.input {
+  background: none;
+  border: none
+}

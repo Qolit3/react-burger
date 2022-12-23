@@ -1,0 +1,34 @@
+.text {
+  text-align: center;
+}
+
+.done_3 {
+  background-image: url('../../images/order-done\ \(1\).png');
+  
+  width: 107px;
+  height: 100px;
+  
+}
+
+.done_2 {
+  background-image: url('../../images/order-done\ \(2\).png');
+  
+  width: 98px;
+  height: 102px;
+  
+}
+.done_1 {
+  background-image: url('../../images/order-done\ \(3\).png');
+  
+  width: 68px;
+  height: 65.33px;
+  
+}
+
+.done {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  
+}

@@ -1,0 +1,39 @@
+.header { 
+  background-color: #1c1c21;
+  width: 100%;  
+}
+
+.block {
+  width: 1240px;
+  margin: 0 auto;
+  height: 88px;
+  align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: space-around;
+}
+
+.column {
+  display: flex;
+  position: absolute;
+}
+
+.column_left {
+  left: 0;
+}
+.column_right {
+  right: 0;
+}
+
+.button {
+  display: flex;
+}
+
+.link {
+  text-decoration: none;
+  color: #8585ad;
+}
+
+.link_active {
+  color: #f2f2f3
+}

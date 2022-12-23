@@ -1,0 +1,30 @@
+.main {
+  position: absolute;
+  z-index: 1;
+  width: 1240px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #131316;
+}
+
+.text {
+  text-align: center;
+}
+
+.image {
+  margin: 0 auto;
+  width: 480px
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  column-gap: 20px;
+  justify-content: center;
+}

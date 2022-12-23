@@ -1,0 +1,17 @@
+.ingredient {
+  width: 272px;
+  position: relative;
+}
+
+.currency {
+  display: flex;
+  justify-content: center;
+}
+
+.digits {
+  margin-right: 9px;
+}
+
+.name {
+  text-align: center;
+}
