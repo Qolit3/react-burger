@@ -1,10 +1,14 @@
+import { useDispatch } from "react-redux";
 import { NavLink, Outlet, useNavigate } from "react-router-dom"
-import { api, refreshToken } from "../../util/constants";
-import { deleteCookie } from "../../util/functions";
+import { loginFail } from "../../services/actions/actionCreators";
+import { FAILED_AUTHORIZATION } from "../../services/actions/userAction";
+import { api } from "../../util/constants";
+import { deleteCookie, getCookie } from "../../util/functions";
 import styles from './profile.module.css'
 
 export const Profile = () => {  
   let description = '';
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const passiveStyle = `${styles.button} text text_type_main-medium`
@@ -17,13 +21,15 @@ export const Profile = () => {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        "token": refreshToken
+        "token": getCookie('refreshToken')
       })
     })
     .then(res => res.json())
     .then(res => {
       if(res.success) {
         console.log('Выход выполнен успешно')
+        dispatch({type: FAILED_AUTHORIZATION})
+        dispatch(loginFail())
         deleteCookie('refreshToken');
         deleteCookie('accessToke')
         navigate('/login')
