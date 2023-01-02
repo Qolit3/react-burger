@@ -19,10 +19,31 @@ import { useNavigate } from "react-router-dom";
 
 const BurgerConstructor = () => {
   const dispatch = useDispatch();
-  const {list, activeOrder} = useSelector(state => ({
+  const {allIngredients, list, activeOrder} = useSelector(state => ({
+    allIngredients: state.allIngredients.ingredients,
     list: state.burgerIng.burgerIngredients,
     activeOrder: state.order.orderModal
   }));
+
+  let currentIngredients = [];
+  /*if(allIngredients.length) {
+      currentIngredients = [
+      {...allIngredients[0],
+      order: 0},
+      {...allIngredients[2],
+      order: 1},
+      {...allIngredients[7],
+      order: 2},
+      {...allIngredients[9],
+      order: 3},
+    ];
+  }*/
+  /*useEffect(() => {
+      dispatch({
+        type: ADD_BURGER_INGREDIENTS,
+        ingredients: currentIngredients
+      })
+  }, [allIngredients])*/
 
   const closeModal = () => {
     dispatch({
@@ -88,7 +109,7 @@ const BurgerConstructor = () => {
           <p className={`${styles.price} text text_type_digits-default`}>{totalPrice}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
+        <Button type="primary" htmlType="button" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
       <Modal id={2} active={activeOrder} handleClose={closeModal}>
         <OrderDetails />
