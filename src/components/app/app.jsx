@@ -9,7 +9,7 @@ import { Register } from '../../pages/register/register';
 import { Constructor } from '../../pages/constructor/constructor';
 import { ForgotPass } from '../../pages/forgotPass/forgotPass';
 import { loginUpdate } from '../../services/actions/updateLoginAction';
-import { getCookie } from '../../util/functions';
+import { deleteCookie, getCookie, setCookie } from '../../util/functions';
 import { Profile } from '../../pages/profile/Profile';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { ResetPass } from '../../pages/resetPass/resetPass';
@@ -26,6 +26,7 @@ function App() {
   let location = useLocation();
 
   useEffect(() => {
+    console.log(document.cookie);
     dispatch(getAllIngredients());
     if(getCookie('refreshToken')) {
       dispatch(loginUpdate(getCookie('refreshToken')))
