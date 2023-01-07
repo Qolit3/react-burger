@@ -19,7 +19,7 @@ const Header = () => {
               <p className={`text ${matchConstructor ? '' : 'text_color_inactive'} text_type_main-default ml-2`}>Конструктор</p>
             </div>
           </Link>
-          <Link to='/profile/orders' className={`${styles.link} ${matchOrders ? styles.link_active : ''}`}>
+          <Link to='/feed' className={`${styles.link} ${matchOrders ? styles.link_active : ''}`}>
             <div className={`${styles.button} pl-5 pr-5 pt-4 pb-4 mt-4 mb-4`}>
               <ListIcon type={matchOrders ? 'primary' : 'secondary'} />
               <p className={`text text_type_main-default ${matchOrders ? '' : 'text_color_inactive'} ml-2`}>Лист заказов</p>

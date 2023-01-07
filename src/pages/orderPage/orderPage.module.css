@@ -1,0 +1,41 @@
+.main {
+  width: 640px;
+  margin: 122px auto 0;
+}
+
+.modal {
+  padding: 24px;
+  width: 640px;
+}
+
+.text_center {
+  text-align: center;
+}
+
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  height: 330px;
+  overflow-y: auto;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.ingredients::-webkit-scrollbar {
+  width: 8px;
+  background-color: #2f2f37;
+}
+.ingredients::-webkit-scrollbar-thumb {
+  
+  background-color: #8585ad;
+}
