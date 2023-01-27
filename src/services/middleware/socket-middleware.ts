@@ -1,6 +1,10 @@
-export const socketMiddleware = (wsUrl, wsActions) => {
-  return store => {
-    let socket = null;
+import { Middleware } from "@reduxjs/toolkit";
+import { TRootState } from "../..";
+
+
+export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
+  return (store) => {
+    let socket: null | WebSocket = null;
 
     return next => action => {
       const { dispatch } = store;
@@ -12,7 +16,7 @@ export const socketMiddleware = (wsUrl, wsActions) => {
         dispatch({type: wsConnecting});
       }
       if (type === wsDisconnect) {
-        socket.close(1000, 'closed');
+        socket?.close(1000, 'closed');
         dispatch({type: wsClose})
       }
       if (socket) {
@@ -20,8 +24,8 @@ export const socketMiddleware = (wsUrl, wsActions) => {
           dispatch({type: wsOpen});
         };
 
-        socket.onerror = event => {
-          dispatch({type: wsError, error: event.code});
+        socket.onerror = (event ) => {
+          dispatch({type: wsError, error: event});
         };
 
         socket.onmessage = event => {
