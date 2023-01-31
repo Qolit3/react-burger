@@ -3,7 +3,7 @@ import Header from '../header/header';
 import styles from './app.module.css'
 import { getAllIngredients } from '../../services/actions/allIngredientsAction';
 import { Route, Routes, useLocation } from 'react-router-dom';
-import { LoginPage } from '../../pages/login/Login.jsx'
+
 import { Register } from '../../pages/register/register';
 import { Constructor } from '../../pages/constructor/constructor';
 import { ForgotPass } from '../../pages/forgotPass/forgotPass';
@@ -20,6 +20,7 @@ import { OrderPage } from '../../pages/orderPage/orderPage';
 import { ProfileOrders } from '../../pages/profileOrders/profileOrders';
 import { FEED_CONNECT, FEED_DISCONNECT } from '../../services/actions/feedActions';
 import { useAppDispatch } from '../..';
+import { LoginPage } from '../../pages/login/Login';
 
 function App() {
   const dispatch = useAppDispatch();

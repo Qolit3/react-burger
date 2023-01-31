@@ -31,7 +31,7 @@ export const IngredientLineDescription: FunctionComponent<IIngredientLineDescrip
     }, 0)
   }
   
-  return (
+  if(ingredient) return (
     <div className={`${styles.main} mb-4`}>
       <div className={styles.image_block}>
         <img className={styles.image} src={ingredient.image} alt="ингредиент бургера" />
@@ -44,5 +44,7 @@ export const IngredientLineDescription: FunctionComponent<IIngredientLineDescrip
     </div>
   )
 
-
+  return (
+    <p>Ошибка загрузки</p>
+  )
 }

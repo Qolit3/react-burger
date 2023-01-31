@@ -11,7 +11,7 @@ import {
 export type TOrdersState = {
   status: 'offline' | 'connecting' | 'online';
   connectionError: string;
-  data: {} | {
+  data: {
     success: boolean;
     total: number;
     totalToday: number;
@@ -22,7 +22,12 @@ export type TOrdersState = {
 const initialState: TOrdersState = {
   status: 'offline',
   connectionError: '',
-  data: {}
+  data: {
+    success: false,
+    total: NaN,
+    totalToday: NaN,
+    orders: []
+  }
 }
 
 export const ordersReducer = (state = initialState, action: TOrdersActions): TOrdersState => {

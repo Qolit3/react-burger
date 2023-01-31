@@ -4,6 +4,7 @@ import styles from './profileOrders.module.css'
 import { useAppDispatch, useAppSelector } from "../.."
 import { TOrderInFeed } from "../../types_and_interfacese/types"
 import { LinkBlock } from "../../components/link-block/link-block"
+import { getCookie } from '../../util/functions'
 
 
 export const ProfileOrders: FunctionComponent = () => {
@@ -11,7 +12,10 @@ export const ProfileOrders: FunctionComponent = () => {
   const dispatch = useAppDispatch();
 
   useEffect((): (() => void) => {
-    dispatch({ type: ORDERS_CONNECT })
+    dispatch({
+      type: ORDERS_CONNECT,
+      token: getCookie('accessToken') 
+    })
     return () => dispatch({ type: ORDERS_DISCONNECT })
   }, [])
 

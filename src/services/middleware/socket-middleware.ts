@@ -1,5 +1,6 @@
 import { Middleware } from "@reduxjs/toolkit";
 import { TRootState } from "../..";
+import { getCookie } from "../../util/functions";
 
 
 export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
@@ -12,7 +13,7 @@ export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
       const { wsConnect, wsDisconnect, wsConnecting, wsOpen, wsClose, wsError, wsMessage } = wsActions;
       
       if (type === wsConnect) {
-        socket = new WebSocket(wsUrl);
+        socket = action.token ? new WebSocket(`${wsUrl}?token=${action.token}`) : new WebSocket(wsUrl);
         dispatch({type: wsConnecting});
       }
       if (type === wsDisconnect) {

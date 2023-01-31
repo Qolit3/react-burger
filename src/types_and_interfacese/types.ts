@@ -1,4 +1,14 @@
-import { ReactNode } from "react";
+import { TAllIngredientsActions } from "../services/actions/allIngredientsAction";
+import { TBurgerIngActions } from "../services/actions/burgerIngActions";
+import { TCreateOrderActions } from "../services/actions/createOrderAction";
+import { TFeedActions } from "../services/actions/feedActions";
+import { TLoginActions } from "../services/actions/loginAction";
+import { TModalActions } from "../services/actions/modalActions";
+import { TOrdersActions } from "../services/actions/ordersActions";
+import { TRegistrationActions } from "../services/actions/registrationAction";
+import { TTabsActions } from "../services/actions/tabsActions";
+import { TUpdateLoginActions } from "../services/actions/updateLoginAction";
+import { TUserActions } from "../services/actions/userAction";
 
 export type TIngredient = {
   readonly calories: number;
@@ -34,3 +44,16 @@ export type TOrderInFeed = {
   readonly createdAt: string;
   readonly updatedAt: string;
 }
+
+export type TApplicationActions = 
+| TAllIngredientsActions
+| TBurgerIngActions
+| TCreateOrderActions
+| TFeedActions
+| TLoginActions
+| TModalActions
+| TOrdersActions
+| TRegistrationActions
+| TTabsActions
+| TUpdateLoginActions
+| TUserActions

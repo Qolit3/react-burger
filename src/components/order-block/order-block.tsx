@@ -34,7 +34,7 @@ export const OrderBlock: FunctionComponent<IOrderBlockProps> = ({ item }) => {
     const order = item.ingredients.length - index;
 
 
-    if (ingredient.type === 'bun') {
+    if (ingredient?.type === 'bun') {
       if (bunIsAdded) { return undefined }
       bunIsAdded = true;
     }

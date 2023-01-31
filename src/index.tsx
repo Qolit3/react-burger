@@ -3,9 +3,9 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './CRA/reportWebVitals';
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore, compose, ActionCreator } from 'redux';
 import { rootReducer } from './services/reducers/rootReducer';
-import thunk from 'redux-thunk';
+import thunk, { ThunkAction } from 'redux-thunk';
 import { Provider, TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { FEED_CLOSE, FEED_CONNECT, FEED_CONNECTING, FEED_DISCONNECT, FEED_ERROR, FEED_MESSAGE, FEED_OPEN } from './services/actions/feedActions';
@@ -13,6 +13,7 @@ import { socketMiddleware } from './services/middleware/socket-middleware';
 import { ORDERS_CLOSE, ORDERS_CONNECT, ORDERS_CONNECTING, ORDERS_DISCONNECT, ORDERS_ERROR, ORDERS_MESSAGE, ORDERS_OPEN } from './services/actions/ordersActions';
 import { getCookie } from './util/functions';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import { TApplicationActions } from './types_and_interfacese/types';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -40,7 +41,7 @@ const ordersActions = {
   wsError: ORDERS_ERROR
 }
 
-const ordersMiddleware = socketMiddleware(`wss://norma.nomoreparties.space/orders?token=${getCookie('accessToken')}`, ordersActions)
+const ordersMiddleware = socketMiddleware(`wss://norma.nomoreparties.space/orders`, ordersActions)
 
 
 const store = createStore(
@@ -53,8 +54,9 @@ const store = createStore(
 );
 
 export type AppDispatch = typeof store.dispatch;
-type DispatchFunc = () => AppDispatch
-export const useAppDispatch: DispatchFunc = useDispatch;
+export type AppThunk<TReturn = void> = ActionCreator<
+ThunkAction<TReturn, TRootState, undefined, TApplicationActions >>
+export const useAppDispatch: () => AppDispatch | AppThunk = useDispatch;
 export const useAppSelector: TypedUseSelectorHook<TRootState> = useSelector
 
 

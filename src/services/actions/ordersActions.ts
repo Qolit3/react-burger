@@ -9,7 +9,8 @@ export const ORDERS_MESSAGE: 'ORDERS_MESSAGE' = 'ORDERS_MESSAGE';
 export const ORDERS_ERROR: 'ORDERS_ERROR' = 'ORDERS_ERROR';
 
 export interface IOrdersConnect {
-  readonly type: typeof ORDERS_CONNECT ;
+  readonly type: typeof ORDERS_CONNECT;
+  readonly token: string;
 }
 
 export interface IOrdersDisconnect {

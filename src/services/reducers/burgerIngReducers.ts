@@ -12,9 +12,8 @@ export type TBurgerIngState ={
   readonly totalPrice: number;
 }
 
-const initialstate = {
+const initialstate: TBurgerIngState = {
   burgerIngredients: [],
-
   totalPrice: 0
 }
 

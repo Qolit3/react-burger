@@ -12,7 +12,7 @@ import { RenderIngerdients } from "../render-ingredients/render-ingredients";
 import { bun } from "../../util/constants";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..";
-import { TIngredient } from "../../types_and_interfacese/types";
+import { TIngredient, TIngredientKeyOrder } from "../../types_and_interfacese/types";
 
 
 
@@ -64,10 +64,10 @@ const BurgerConstructor: FunctionComponent = () => {
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
-    drop(item: TIngredient) {
+    drop(item: TIngredientKeyOrder) {
       let newList = list;
       if(item.type === bun) {
-        newList.splice(list.findIndex((obj: TIngredient) => obj.type === item.type), 1, item)
+        newList.splice(list.findIndex((obj: TIngredientKeyOrder) => obj.type === item.type), 1, item)
       } else {
         newList.push({...item, order: list.length})
       }

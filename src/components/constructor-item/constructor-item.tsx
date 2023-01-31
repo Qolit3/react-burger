@@ -32,6 +32,7 @@ export const ConstructorItem: FunctionComponent<IConstructorItemProps> = ({ingre
       newList.sort((a: TIngredientKeyOrder, b: TIngredientKeyOrder) => {
         if(a.order > b.order) return 1;
         if(a.order < b.order) return -1;
+        return 0
       })
       dispatch({
         type: ADD_BURGER_INGREDIENTS,
