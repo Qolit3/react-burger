@@ -1,9 +1,6 @@
 import { Middleware } from "@reduxjs/toolkit";
-import { TRootState } from "../..";
-import { getCookie } from "../../util/functions";
 
-
-export const socketMiddleware = (wsUrl: string, wsActions: any): Middleware => {
+export const socketMiddleware = (wsUrl: string, wsActions: {[key: string]: any}): Middleware => {
   return (store) => {
     let socket: null | WebSocket = null;
 

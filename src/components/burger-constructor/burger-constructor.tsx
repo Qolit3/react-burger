@@ -5,14 +5,14 @@ import {
 import styles from './burger-constructor.module.css'
 import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
-import { getOrder, REMOVE_ORDER_MODAL, SET_ORDER_MODAL } from "../../services/actions/createOrderAction";
+import { getOrder, REMOVE_ORDER_MODAL, SET_ORDER_MODAL } from "../../services/actions/create-order-action";
 import { useDrop } from "react-dnd/dist/hooks/useDrop";
-import { ADD_BURGER_INGREDIENTS } from "../../services/actions/burgerIngActions";
+import { ADD_BURGER_INGREDIENTS } from "../../services/actions/burger-ing-actions";
 import { RenderIngerdients } from "../render-ingredients/render-ingredients";
 import { bun } from "../../util/constants";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../..";
-import { TIngredient, TIngredientKeyOrder } from "../../types_and_interfacese/types";
+import { TIngredient, TIngredientKeyOrder } from "../../types-and-interfacese/types";
 
 
 
@@ -33,11 +33,11 @@ const BurgerConstructor: FunctionComponent = () => {
   
   const navigate = useNavigate();
   const openModal = () => {
-    console.log(isAuth)
+    
     if(!isAuth) {
       return navigate('/login')
     }
-    let idList = list.map((item: TIngredient) => item._id);
+    let idList = list.map(item => item._id);
     idList.push(list[0]._id);
     dispatch(getOrder(idList));
     dispatch({
@@ -67,7 +67,7 @@ const BurgerConstructor: FunctionComponent = () => {
     drop(item: TIngredientKeyOrder) {
       let newList = list;
       if(item.type === bun) {
-        newList.splice(list.findIndex((obj: TIngredientKeyOrder) => obj.type === item.type), 1, item)
+        newList.splice(list.findIndex(obj => obj.type === item.type), 1, item)
       } else {
         newList.push({...item, order: list.length})
       }

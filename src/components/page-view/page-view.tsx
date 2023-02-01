@@ -1,7 +1,7 @@
 import { useState, useEffect, FunctionComponent } from 'react';
 import { useParams } from "react-router-dom";
 import { useAppSelector } from '../..';
-import { TIngredient } from '../../types_and_interfacese/types';
+import { TIngredient } from '../../types-and-interfacese/types';
 import { DiscribeBlock } from '../discibe-block/discrie-block';
 import styles from './page-view.module.css'
 
@@ -11,7 +11,7 @@ export const PageView: FunctionComponent = () => {
   const ingredients = useAppSelector(store => store.allIngredients.ingredients);
   const [item, setItem] = useState<TIngredient | undefined>(undefined);
   useEffect(() => {
-    setItem(ingredients.find((item: TIngredient) => params.id === item._id));
+    setItem(ingredients.find(item => params.id === item._id));
   }, [ingredients, params])
 
   const Card = () => {

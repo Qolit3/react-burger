@@ -1,17 +1,24 @@
-import { FunctionComponent } from "react";
-import { useAppSelector } from "../..";
+import { FunctionComponent, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../..";
 import { LinkBlock } from "../../components/link-block/link-block";
-import { TOrderInFeed } from "../../types_and_interfacese/types";
+import { FEED_CONNECT, FEED_DISCONNECT } from "../../services/actions/feed-actions";
+import { TOrderInFeed } from "../../types-and-interfacese/types";
 import styles from './feed.module.css'
 
 export const Feed: FunctionComponent = () => {
-  const data = useAppSelector(state => state.ordersFeed.data)
+  const data = useAppSelector(state => state.ordersFeed.data);
+  const dispatch = useAppDispatch();
+  
+  useEffect((): (() => void)  => {
+    dispatch({type: FEED_CONNECT})
+    return () => dispatch({type: FEED_DISCONNECT})
+  }, [])
   
   let doneOrders: TOrderInFeed[] = [];
   let unDoneOrders: TOrderInFeed[] = [];
   
   if(data.orders) {
-    data.orders.forEach((item: TOrderInFeed) => {
+    data.orders.forEach(item => {
       if(item.status === 'done') {
         if(doneOrders.length < 30) {
           doneOrders.push(item);
@@ -29,7 +36,7 @@ export const Feed: FunctionComponent = () => {
     <div>
       <h2>Лента Заказов</h2>
       <div className={styles.scroll}>
-        { data.orders ? data.orders.map((item: TOrderInFeed) => <LinkBlock key={item._id} item={item} to='feed'/>) : <p>Загрузка</p>}
+        { data.orders ? data.orders.map(item => <LinkBlock key={item._id} item={item} to='feed'/>) : <p>Загрузка</p>}
       </div>
     </div>
     <div className="ml-15 mt-15">

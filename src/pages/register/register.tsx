@@ -2,8 +2,8 @@ import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-component
 import { FunctionComponent, useRef } from 'react'
 import styles from '../login/login.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { registration } from '../../services/actions/registrationAction';
-import { useForm } from '../../hooks/useForm';
+import { registration } from '../../services/actions/registration-action';
+import { useForm } from '../../hooks/use-form';
 import { useAppDispatch, useAppSelector } from '../..';
 
 

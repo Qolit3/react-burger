@@ -2,34 +2,35 @@ import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components
 import { FunctionComponent, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useAppSelector } from "../.."
-import { IIngredientLineDescriptionProps } from "../../types_and_interfacese/interfaces"
-import { TIngredient, TOrderInFeed } from "../../types_and_interfacese/types"
+import { IIngredientLineDescriptionProps } from "../../types-and-interfacese/interfaces"
+import { TIngredient, TOrderInFeed } from "../../types-and-interfacese/types"
 import styles from './ingredient-line-description.module.css'
 
 
-export const IngredientLineDescription: FunctionComponent<IIngredientLineDescriptionProps> = ({id}) => {
+export const IngredientLineDescription: FunctionComponent<IIngredientLineDescriptionProps> = ({id, place}) => {
   const { allIngredients, orders } = useAppSelector(store => ({
     allIngredients: store.allIngredients.ingredients,
-    orders: store.ordersFeed.data.orders
+    orders: place ? store.profileOrders.data.orders : store.ordersFeed.data.orders,
   }))
 
-  const ingredient = allIngredients.find((item: TIngredient) => item._id === id)
+  const ingredient = allIngredients.find(item => item._id === id)
   const params = useParams();
-  const [order, setOrder] = useState< TOrderInFeed | undefined>(undefined);
-  
+  const [count, setCount] = useState<number>(0);
 
   useEffect(() => {
-    setOrder(orders?.find((item: TOrderInFeed) => params.id === item._id));
-  }, [orders, params])
-
-  let count: number = 0;
-
-  if(order) {
-    count = order.ingredients.reduce((sum, current) => {
-      if(current === id) return sum + 1
-      return sum
-    }, 0)
-  }
+    const order = orders.find(item => {
+      return params.id === item._id
+    })
+    console.log(order);
+    
+    if(order) {
+      const a = order.ingredients.reduce((sum, current) => {        
+        if(current === id) return sum + 1
+        return sum
+      }, 0)
+      setCount(a)      
+    }
+  }, [orders, params])    
   
   if(ingredient) return (
     <div className={`${styles.main} mb-4`}>

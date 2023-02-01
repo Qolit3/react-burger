@@ -1,8 +1,8 @@
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FunctionComponent } from "react"
 import { useAppSelector } from "../.."
-import { IOrderBlockProps } from "../../types_and_interfacese/interfaces"
-import { TIngredient } from "../../types_and_interfacese/types"
+import { IOrderBlockProps } from "../../types-and-interfacese/interfaces"
+import { TIngredient } from "../../types-and-interfacese/types"
 import styles from './order-block.module.scss'
 
 
@@ -11,7 +11,7 @@ export const OrderBlock: FunctionComponent<IOrderBlockProps> = ({ item }) => {
 
   let totalPrice: number = 0;
   totalPrice = item.ingredients.reduce((sum, current) => {
-    const ingredient = allIngredients.find((item: TIngredient) => item._id === current)
+    const ingredient = allIngredients.find(item => item._id === current)
     if (ingredient) { return sum + ingredient.price }
     return sum
   }, 0)
@@ -30,7 +30,7 @@ export const OrderBlock: FunctionComponent<IOrderBlockProps> = ({ item }) => {
       isALot = true;
     }
 
-    const ingredient = allIngredients.find((item: TIngredient) => item._id === current)
+    const ingredient = allIngredients.find(item => item._id === current)
     const order = item.ingredients.length - index;
 
 

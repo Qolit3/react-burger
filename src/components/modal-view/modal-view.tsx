@@ -1,8 +1,8 @@
 import { useState, useEffect, FunctionComponent } from 'react'
 import { useNavigate, useParams } from "react-router-dom";
 import { useAppSelector } from '../..';
-import { IModalViewProps } from '../../types_and_interfacese/interfaces';
-import { TIngredient } from '../../types_and_interfacese/types';
+import { IModalViewProps } from '../../types-and-interfacese/interfaces';
+import { TIngredient } from '../../types-and-interfacese/types';
 import { DiscribeBlock } from '../discibe-block/discrie-block';
 import Modal from "../modal/modal";
 import styles from './modal-view.module.css'
@@ -15,7 +15,7 @@ export const ModalView: FunctionComponent<IModalViewProps> = ({id}) => {
   const [item, setItem] = useState<TIngredient | undefined>(undefined);
 
   useEffect(() => {
-    setItem(ingredients.find((item: TIngredient) => params.id === item._id));
+    setItem(ingredients.find(item => params.id === item._id));
   }, [ingredients, params])
   
   const closeModal = () => {
@@ -49,6 +49,4 @@ export const ModalView: FunctionComponent<IModalViewProps> = ({id}) => {
       <Card /> 
     </Modal>
   )
-  
-  
 }

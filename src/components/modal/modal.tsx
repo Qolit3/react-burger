@@ -3,7 +3,7 @@ import modal from'./modal.module.css';
 import ReactDOM from "react-dom";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { IModalProps } from "../../types_and_interfacese/interfaces";
+import { IModalProps } from "../../types-and-interfacese/interfaces";
 
 const reactModals = document.querySelector('#react-modals') as Element | DocumentFragment
 

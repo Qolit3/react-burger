@@ -4,16 +4,15 @@ import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './CRA/reportWebVitals';
 import { applyMiddleware, createStore, compose, ActionCreator } from 'redux';
-import { rootReducer } from './services/reducers/rootReducer';
+import { rootReducer } from './services/reducers/root-reducer';
 import thunk, { ThunkAction } from 'redux-thunk';
 import { Provider, TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { FEED_CLOSE, FEED_CONNECT, FEED_CONNECTING, FEED_DISCONNECT, FEED_ERROR, FEED_MESSAGE, FEED_OPEN } from './services/actions/feedActions';
+import { FEED_CLOSE, FEED_CONNECT, FEED_CONNECTING, FEED_DISCONNECT, FEED_ERROR, FEED_MESSAGE, FEED_OPEN } from './services/actions/feed-actions';
 import { socketMiddleware } from './services/middleware/socket-middleware';
-import { ORDERS_CLOSE, ORDERS_CONNECT, ORDERS_CONNECTING, ORDERS_DISCONNECT, ORDERS_ERROR, ORDERS_MESSAGE, ORDERS_OPEN } from './services/actions/ordersActions';
-import { getCookie } from './util/functions';
+import { ORDERS_CLOSE, ORDERS_CONNECT, ORDERS_CONNECTING, ORDERS_DISCONNECT, ORDERS_ERROR, ORDERS_MESSAGE, ORDERS_OPEN } from './services/actions/orders-actions';
 import { composeWithDevTools } from 'redux-devtools-extension';
-import { TApplicationActions } from './types_and_interfacese/types';
+import { TApplicationActions } from './types-and-interfacese/types';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

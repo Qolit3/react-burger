@@ -1,6 +1,6 @@
 import { ConstructorItem } from "../constructor-item/constructor-item";
 import { FunctionComponent } from 'react'
-import { IRenderIngredientsProps } from "../../types_and_interfacese/interfaces";
+import { IRenderIngredientsProps } from "../../types-and-interfacese/interfaces";
 
 export const RenderIngerdients: FunctionComponent<IRenderIngredientsProps> = ({list}) => {
   const renderIngerdients = () => {

@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react"
 import { Link, useLocation } from "react-router-dom"
-import { ILinkBlockProps } from "../../types_and_interfacese/interfaces"
+import { ILinkBlockProps } from "../../types-and-interfacese/interfaces"
 import { OrderBlock } from "../order-block/order-block"
 import styles from './link-block.module.css'
 

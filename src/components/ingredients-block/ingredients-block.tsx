@@ -1,8 +1,8 @@
-import { useDispatch } from 'react-redux';
 import { FunctionComponent, useEffect } from 'react'
 import Ingredient from '../ingredient/ingredient';
 import styles from './ingredients-block.module.css'
-import { IIngredientsBlockProps } from '../../types_and_interfacese/interfaces';
+import { IIngredientsBlockProps } from '../../types-and-interfacese/interfaces';
+import { useAppDispatch } from '../..';
 
 
 const IngredientsBlock:FunctionComponent<IIngredientsBlockProps> = ({ block, id }) => {  
@@ -14,7 +14,7 @@ const IngredientsBlock:FunctionComponent<IIngredientsBlockProps> = ({ block, id 
     )
   }
 
-  const dispatch = useDispatch();  
+  const dispatch = useAppDispatch();  
 
   let type: string;
   if(block.ingredientName === 'Булки') {

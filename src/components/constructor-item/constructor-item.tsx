@@ -1,18 +1,16 @@
-import { useDispatch } from 'react-redux'
 import { useDrag, useDrop } from "react-dnd/dist/hooks";
 import { ConstructorElement, DragIcon } from "@ya.praktikum/react-developer-burger-ui-components"
-
 import styles from '../burger-constructor/burger-constructor.module.css'
-import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/burgerIngActions';
-import { useAppSelector } from '../..';
+import { ADD_BURGER_INGREDIENTS, REMOVE_BURGER_INGREDIENTS } from '../../services/actions/burger-ing-actions';
+import { useAppDispatch, useAppSelector } from '../..';
 import { FunctionComponent } from 'react';
-import { IConstructorItemProps } from '../../types_and_interfacese/interfaces';
-import { TIngredient, TIngredientKeyOrder } from '../../types_and_interfacese/types';
+import { IConstructorItemProps } from '../../types-and-interfacese/interfaces';
+import { TIngredientKeyOrder } from '../../types-and-interfacese/types';
 
 
 export const ConstructorItem: FunctionComponent<IConstructorItemProps> = ({ingredient, position}) => {
   const list = useAppSelector(state => state.burgerIng.burgerIngredients)
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const [, dragRef] = useDrag({
     type: 'constructor',
@@ -29,7 +27,7 @@ export const ConstructorItem: FunctionComponent<IConstructorItemProps> = ({ingre
       newList[item.order].order = change
 
       
-      newList.sort((a: TIngredientKeyOrder, b: TIngredientKeyOrder) => {
+      newList.sort((a, b) => {
         if(a.order > b.order) return 1;
         if(a.order < b.order) return -1;
         return 0
@@ -70,7 +68,7 @@ export const ConstructorItem: FunctionComponent<IConstructorItemProps> = ({ingre
         <DragIcon type="primary"/>
         <ConstructorElement text={ingredient.name} thumbnail={ingredient.image} price={ingredient.price} handleClose={() => {
           
-          list.splice(list.findIndex((obj: TIngredientKeyOrder) => obj._id === ingredient._id), 1)
+          list.splice(list.findIndex(obj => obj._id === ingredient._id), 1)
           for(let i = 1; i < list.length; i++) {
             list[i].order = i;
           }

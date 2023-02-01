@@ -1,30 +1,28 @@
 import { useEffect} from 'react';
 import Header from '../header/header';
 import styles from './app.module.css'
-import { getAllIngredients } from '../../services/actions/allIngredientsAction';
+import { getAllIngredients } from '../../services/actions/all-ingredients-action';
 import { Route, Routes, useLocation } from 'react-router-dom';
-
 import { Register } from '../../pages/register/register';
 import { Constructor } from '../../pages/constructor/constructor';
-import { ForgotPass } from '../../pages/forgotPass/forgotPass';
-import { loginUpdate } from '../../services/actions/updateLoginAction';
+import { ForgotPass } from '../../pages/forgot-pass/forgot-pass';
+import { loginUpdate } from '../../services/actions/update-login-action';
 import { getCookie } from '../../util/functions';
 import { Profile } from '../../pages/profile/Profile';
 import { ProtectedRoute } from '../protected-route/protected-route';
-import { ResetPass } from '../../pages/resetPass/resetPass';
+import { ResetPass } from '../../pages/reset-pass/reset-pass';
 import { ProfileChange } from '../profile-change/profile-change';
 import { ModalView } from '../modal-view/modal-view';
 import { PageView } from '../page-view/page-view';
 import { Feed } from '../../pages/feed/feed';
-import { OrderPage } from '../../pages/orderPage/orderPage';
-import { ProfileOrders } from '../../pages/profileOrders/profileOrders';
-import { FEED_CONNECT, FEED_DISCONNECT } from '../../services/actions/feedActions';
+import { OrderPage } from '../../pages/order-page/order-page';
+import { ProfileOrders } from '../../pages/profile-orders/profile-orders';
 import { useAppDispatch } from '../..';
 import { LoginPage } from '../../pages/login/Login';
 
 function App() {
   const dispatch = useAppDispatch();
-  let location = useLocation();
+  const location = useLocation();
 
   useEffect(() => {
     dispatch(getAllIngredients());
@@ -32,11 +30,9 @@ function App() {
       dispatch(loginUpdate(getCookie('refreshToken')))
     }
   }, [])
+  console.log(document.cookie);
   
-  useEffect((): (() => void)  => {
-    dispatch({type: FEED_CONNECT})
-    return () => dispatch({type: FEED_DISCONNECT})
-  }, [])
+  
   
   const background = location.state?.background
   

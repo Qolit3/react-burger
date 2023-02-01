@@ -1,7 +1,6 @@
 import { FunctionComponent } from 'react'
-import { useSelector } from 'react-redux'
-import { TRootState } from '../..'
-import { IRenderAllIngredientsProps } from '../../types_and_interfacese/interfaces'
+import { useAppSelector } from '../..'
+import { IRenderAllIngredientsProps } from '../../types-and-interfacese/interfaces'
 import styles from '../burger-ingredients/burger-ingredients.module.css'
 import IngredientsBlock from '../ingredients-block/ingredients-block'
 
@@ -9,7 +8,7 @@ export const RenderAllIngredients: FunctionComponent<IRenderAllIngredientsProps>
 
   const {
     allIngredientsRequest,
-    allIngredientsFailed} = useSelector((state: TRootState) => ({
+    allIngredientsFailed} = useAppSelector(state => ({
       allIngredientsRequest: state.allIngredients.ingredientsRequest,
       allIngredientsFailed: state.allIngredients.ingredientsFailed
     }))

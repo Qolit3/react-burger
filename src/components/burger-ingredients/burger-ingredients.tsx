@@ -1,13 +1,9 @@
-import { FunctionComponent, useEffect, useMemo, useState } from 'react';
-import PropTypes from 'prop-types'
+import { FunctionComponent, useEffect, useState } from 'react';
 import styles from './burger-ingredients.module.css'
-import { useSelector } from 'react-redux';
-
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
-import ingredientType from '../../util/types';
 import { RenderAllIngredients } from '../render-all-ingredients/render-all-ingredients';
-import { TBlock, TIngredient } from '../../types_and_interfacese/types';
-import { TRootState } from '../..';
+import { TBlock, TIngredient } from '../../types-and-interfacese/types';
+import { useAppSelector } from '../..';
 
 export const BurgerIngredients: FunctionComponent = () => {
   const [current, setCurrent] = useState<string>('0');
@@ -23,7 +19,7 @@ export const BurgerIngredients: FunctionComponent = () => {
     allIngredients,
     bunsPos,
     saucesPos,
-    mainsPos } = useSelector((state: TRootState) => ({
+    mainsPos } = useAppSelector((state) => ({
       allIngredients: state.allIngredients.ingredients,
       bunsPos: state.tabs.bunsTabPos,
       saucesPos: state.tabs.saucesTabPos,
@@ -33,15 +29,15 @@ export const BurgerIngredients: FunctionComponent = () => {
   useEffect(() => {
     setBuns( {
       ingredientName: 'Булки',
-      ingredients: allIngredients.filter((item: TIngredient) => item.type === 'bun')
+      ingredients: allIngredients.filter(item => item.type === 'bun')
     })
     setSauces( {
       ingredientName: 'Соусы',
-      ingredients: allIngredients.filter((item: TIngredient) => item.type === 'sauce')
+      ingredients: allIngredients.filter(item => item.type === 'sauce')
     })
     setMains ({
       ingredientName: 'Начинки',
-      ingredients: allIngredients.filter((item: TIngredient) => item.type === 'main')
+      ingredients: allIngredients.filter(item => item.type === 'main')
     })   
   },[allIngredients])
 
@@ -81,11 +77,5 @@ export const BurgerIngredients: FunctionComponent = () => {
     </div>
   )
 }
-
-BurgerIngredients.propTypes = {
-  list: PropTypes.arrayOf(ingredientType)
-}
-
-
 
 export default BurgerIngredients;

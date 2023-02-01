@@ -1,9 +1,9 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import React, { FormEvent, FunctionComponent, useRef, useState } from 'react'
+import { FormEvent, FunctionComponent, useRef } from 'react'
 import styles from './login.module.css'
 import { Link, useLocation, Navigate } from 'react-router-dom'
-import { login } from '../../services/actions/loginAction';
-import { useForm } from '../../hooks/useForm';
+import { login } from '../../services/actions/login-action';
+import { useForm } from '../../hooks/use-form';
 import { useAppDispatch, useAppSelector } from '../..';
 
 export const LoginPage: FunctionComponent = () => {

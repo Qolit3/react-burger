@@ -1,6 +1,6 @@
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState, useEffect, useRef, FunctionComponent } from 'react';
-import { useForm } from '../../hooks/useForm';
+import { useForm } from '../../hooks/use-form';
 import { accessToken, api } from "../../util/constants";
 import { checkResponse } from '../../util/functions';
 import styles from './profile-change.module.css'

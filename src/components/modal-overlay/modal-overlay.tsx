@@ -1,5 +1,5 @@
 import React, { FunctionComponent } from "react";
-import { IModalOverlayProps } from "../../types_and_interfacese/interfaces";
+import { IModalOverlayProps } from "../../types-and-interfacese/interfaces";
 import styles from './modal-overlay.module.css';
 
 
