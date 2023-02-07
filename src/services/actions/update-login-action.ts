@@ -1,7 +1,7 @@
 import { ActionCreator } from "redux";
 import { AppDispatch, AppThunk } from "../..";
 import { api } from "../../util/constants";
-import { checkResponse, setCookie } from "../../util/functions";
+import { checkResponse, deleteCookie, setCookie } from "../../util/functions";
 import { authFail, authSuccess } from "./user-action";
 
 export const LOGIN_UPDATE: 'LOGIN_UPDATE' = 'LOGIN_UPDATE';

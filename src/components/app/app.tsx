@@ -32,9 +32,10 @@ function App() {
   }, [])
   console.log(document.cookie);
   
-  
-  
   const background = location.state?.background
+  console.log(background);
+  console.log(location);
+  
   
   return (
     <div className={styles.app}>      
@@ -43,7 +44,7 @@ function App() {
           <Route path='/'  element={<Constructor />} />
           <Route path='/ingredients/:id'  element={<PageView />} />
           <Route path='/feed' element={<Feed />} />
-          <Route path='/feed/:id' element={<OrderPage /> } />
+          <Route path='/feed/:id' element={<OrderPage place={false} /> } />
           <Route element={<ProtectedRoute path='/' isAuth={false}/>}>
             <Route path='/login'  element={<LoginPage/>} />
             <Route path='/register'  element={<Register/>} />
@@ -61,8 +62,10 @@ function App() {
         {background && (
           <Routes>
             <Route path='/ingredients/:id'  element={<ModalView id={'1'} />}/>
-            <Route path='/profile/orders/:id' element={<OrderPage modal={true} place={true} />} />
-            <Route path='/feed/:id' element={<OrderPage modal={true} />} />
+            <Route element={<ProtectedRoute path='/login' isAuth={true}/>}>
+              <Route path='/profile/orders/:id' element={<OrderPage modal={true} place={true} />} />
+            </Route>
+            <Route path='/feed/:id' element={<OrderPage modal={true} place={false} />} />
           </Routes>
         )}
     </div>

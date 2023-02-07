@@ -9,17 +9,18 @@ import { TOrderInFeed } from "../../types-and-interfacese/types";
 import { IOrderPageProps } from "../../types-and-interfacese/interfaces";
 import { ORDERS_CONNECT, ORDERS_DISCONNECT } from "../../services/actions/orders-actions";
 import { getCookie } from "../../util/functions";
+import { FEED_CONNECT, FEED_DISCONNECT } from "../../services/actions/feed-actions";
 
 
 export const OrderPage: FunctionComponent<IOrderPageProps> = ({ place, modal }) => {
   const params = useParams();
   const navigate = useNavigate();
-  const {orders, allIngredients} = useAppSelector(store => ({
+  const { orders, allIngredients } = useAppSelector(store => ({
     orders: place ? store.profileOrders.data.orders : store.ordersFeed.data.orders,
     allIngredients: store.allIngredients.ingredients
   }));
   const [order, setOrder] = useState<TOrderInFeed | undefined>(undefined)
-  let ingredients: string[]  = [];
+  let ingredients: string[] = [];
   let isBunAdded: boolean = false;
   let totalPrice: number = 0;
   const dispatch = useAppDispatch();
@@ -28,14 +29,14 @@ export const OrderPage: FunctionComponent<IOrderPageProps> = ({ place, modal }) 
     allIngredients.forEach(current => {
       if (item === current._id) {
         if (current.type === 'bun') {
-          if (isBunAdded) {return undefined};
+          if (isBunAdded) { return undefined };
           ingredients.push(item);
           isBunAdded = true;
           totalPrice += current.price;
           return undefined
         }
         totalPrice += current.price;
-        if(ingredients.includes(item)) {return undefined}
+        if (ingredients.includes(item)) { return undefined }
         ingredients.push(item)
       }
     })
@@ -44,26 +45,23 @@ export const OrderPage: FunctionComponent<IOrderPageProps> = ({ place, modal }) 
   const closeModal = () => {
     navigate(-1);
   }
-  useEffect((): (() => void) => {
-  console.log(orders);
-  
-    if(!orders || !orders.length) {
-      console.log(1);
-      
-      dispatch({
-        type: ORDERS_CONNECT,
-        token: getCookie('accessToken') 
-      })
+  useEffect((): (() => void) | undefined => {
+    if (!orders || !orders.length) {
+      if (place) {
+        dispatch({
+          type: ORDERS_CONNECT,
+          token: getCookie('accessToken')
+        })
+        return () => dispatch({ type: ORDERS_DISCONNECT })
+      } else {
+        dispatch({ type: FEED_CONNECT })
+        return () => dispatch({ type: FEED_DISCONNECT })
+      }
     }
-    return () => dispatch({ type: ORDERS_DISCONNECT })
   }, [])
 
 
   useEffect(() => {
-    console.log(orders);
-    
-    console.log(orders?.find(item => params.id === item._id));
-    
     setOrder(orders?.find(item => params.id === item._id))
   }, [params, orders])
 

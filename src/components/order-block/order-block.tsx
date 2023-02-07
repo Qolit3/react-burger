@@ -1,5 +1,6 @@
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components"
 import { FunctionComponent } from "react"
+import { useLocation } from "react-router-dom"
 import { useAppSelector } from "../.."
 import { IOrderBlockProps } from "../../types-and-interfacese/interfaces"
 import { TIngredient } from "../../types-and-interfacese/types"
@@ -48,7 +49,9 @@ export const OrderBlock: FunctionComponent<IOrderBlockProps> = ({ item }) => {
     }
     return undefined
   })
-
+  const location = useLocation();
+  //console.log(location);
+  
 
   return (
     <div className={`${styles.block} mb-4`}>

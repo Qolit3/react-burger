@@ -5,7 +5,7 @@ import { OrderBlock } from "../order-block/order-block"
 import styles from './link-block.module.css'
 
 export const LinkBlock: FunctionComponent<ILinkBlockProps> = ({ item, to }) => {
-  const location = useLocation();
+  const location = useLocation();  
 
   return (
     <Link className={styles.link} to={`/${to}/${item._id}`} state={{

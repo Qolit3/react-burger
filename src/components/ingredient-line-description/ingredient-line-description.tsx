@@ -3,7 +3,6 @@ import { FunctionComponent, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { useAppSelector } from "../.."
 import { IIngredientLineDescriptionProps } from "../../types-and-interfacese/interfaces"
-import { TIngredient, TOrderInFeed } from "../../types-and-interfacese/types"
 import styles from './ingredient-line-description.module.css'
 
 
@@ -21,8 +20,7 @@ export const IngredientLineDescription: FunctionComponent<IIngredientLineDescrip
     const order = orders.find(item => {
       return params.id === item._id
     })
-    console.log(order);
-    
+        
     if(order) {
       const a = order.ingredients.reduce((sum, current) => {        
         if(current === id) return sum + 1

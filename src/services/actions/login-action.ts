@@ -1,13 +1,8 @@
-import { Dispatch } from "react";
 import { ActionCreator } from "redux";
-import { ThunkAction } from "redux-thunk";
 import { AppDispatch, AppThunk } from "../..";
 import { api } from "../../util/constants";
 import { checkResponse, setCookie } from "../../util/functions";
-import { TLoginState } from "../reducers/login-reducer";
-import { authFail, authSuccess, TUserActions } from "./user-action";
-
-
+import { authFail, authSuccess } from "./user-action";
 
 export const LOGIN: 'LOGIN' = 'LOGIN';
 export const LOGIN_SUCCESS: 'LOGIN_SUCCESS' = 'LOGIN_SUCCESS';

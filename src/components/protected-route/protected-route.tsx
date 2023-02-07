@@ -8,6 +8,14 @@ export const ProtectedRoute: FunctionComponent<IProtectedRouteProps> = ({childre
   const isAuthorized = useAppSelector(store => store.user.isAuthorized);
   const location = useLocation();
   const from = location.state?.from || '/';
+  let { state } = useLocation();
+  const a = {
+    ...state,
+    from: location
+  } 
+  console.log(location);
+  
+  console.log(from);
   
   if(isAuth && !isAuthorized) {
     return <Navigate to={'/login'} state={{ from: location }} />
