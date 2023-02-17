@@ -26,9 +26,11 @@ const Header = () => {
             </div>
           </Link>
         </div>
-        <div className='logo'>
-          <Logo />
-        </div>
+        <Link to='/'>
+          <div className='logo'>
+            <Logo />
+          </div>
+        </Link>
         <div className={`${styles.column} ${styles.column_right}`}>
           <Link to='/profile' className={`${styles.link} ${matchProfile ? styles.link_active : ''}`}>
             <div className={`${styles.button} pl-5 pr-5 pt-4 pb-4 mt-4 mb-4`}>
